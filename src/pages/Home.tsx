@@ -5,7 +5,7 @@ import pythonImg from "@/assets/python-course.png"
 import fullstackImg from "@/assets/fullstack-course.png"
 import dsImg from "@/assets/datascience-course.png"
 import leadershipImg from "@/assets/leadership-course.png"
-import { PlayCircle, Sparkles, Search, Code, Briefcase, PenTool, LineChart } from "lucide-react"
+import { Sparkles, Search, Code, Briefcase, PenTool, LineChart } from "lucide-react"
 
 export default function Home() {
   const recommendedCourses = [
