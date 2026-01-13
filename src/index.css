@@ -4,75 +4,118 @@
 
 @layer base {
     :root {
-        /* Theme: "Modern Swiss" - Clean, Rounded, Soft Shadows */
-        --background: 210 40% 98%;
-        /* Soft off-white blueish tint */
-        --foreground: 222 47% 11%;
-        /* Deep Navy Black */
-
-        --card: 0 0% 100%;
-        --card-foreground: 222 47% 11%;
-
-        --popover: 0 0% 100%;
-        --popover-foreground: 222 47% 11%;
-
-        /* Primary: Electric Indigo - Distinct from Udemy's purple */
-        --primary: 243 75% 59%;
-        /* #6366f1 Indigo 500 */
-        --primary-foreground: 210 40% 98%;
-
-        /* Secondary: Soft Slate */
-        --secondary: 210 40% 96.1%;
-        --secondary-foreground: 222 47% 11%;
-
-        --muted: 210 40% 96.1%;
-        --muted-foreground: 215.4 16.3% 46.9%;
-
-        /* Accent: Vibrant Coral for differentiation */
-        --accent: 14 89% 62%;
-        /* #F57C58 */
-        --accent-foreground: 210 40% 98%;
-
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 210 40% 98%;
-
-        --border: 214.3 31.8% 91.4%;
-        --input: 214.3 31.8% 91.4%;
-        --ring: 243 75% 59%;
-
-        --radius: 1rem;
-        /* Rounded corners are back - Friendly & Modern */
+        /* Coursera-style theme: Clean white background, vibrant blue primary, dark navy text */
+        --background: 0.995 0 0;
+        --foreground: 0.25 0.02 255;
+        --card: 1.0 0 0;
+        --card-foreground: 0.25 0.02 255;
+        --popover: 1.0 0 0;
+        --popover-foreground: 0.25 0.02 255;
+        /* Coursera Blue - vibrant and professional */
+        --primary: 0.50 0.18 255;
+        --primary-foreground: 1.0 0 0;
+        /* Dark navy for secondary elements */
+        --secondary: 0.96 0.005 250;
+        --secondary-foreground: 0.25 0.02 255;
+        /* Light gray for muted backgrounds */
+        --muted: 0.97 0.003 250;
+        --muted-foreground: 0.55 0.01 250;
+        /* Light blue accent for hover states */
+        --accent: 0.95 0.02 250;
+        --accent-foreground: 0.50 0.18 255;
+        --destructive: 0.55 0.22 25;
+        --destructive-foreground: 1.0 0 0;
+        /* Subtle gray borders */
+        --border: 0.92 0.005 250;
+        --input: 0.92 0.005 250;
+        --ring: 0.50 0.18 255;
+        --chart-1: 0.50 0.18 255;
+        --chart-2: 0.65 0.15 160;
+        --chart-3: 0.75 0.15 85;
+        --chart-4: 0.60 0.18 150;
+        --chart-5: 0.55 0.20 15;
+        --sidebar: 1.0 0 0;
+        --sidebar-foreground: 0.25 0.02 255;
+        --sidebar-primary: 0.50 0.18 255;
+        --sidebar-primary-foreground: 1.0 0 0;
+        --sidebar-accent: 0.95 0.02 250;
+        --sidebar-accent-foreground: 0.50 0.18 255;
+        --sidebar-border: 0.92 0.005 250;
+        --sidebar-ring: 0.50 0.18 255;
+        --font-sans: 'Open Sans', sans-serif;
+        --font-serif: Georgia, serif;
+        --font-mono: Menlo, monospace;
+        --radius: 0.5rem;
+        --shadow-x: 0px;
+        --shadow-y: 2px;
+        --shadow-blur: 4px;
+        --shadow-spread: 0px;
+        --shadow-opacity: 0.08;
+        --shadow-color: rgba(0, 0, 0, 0.08);
+        --shadow-2xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+        --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.06);
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+        --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+        --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.14);
+        --shadow-2xl: 0 24px 48px rgba(0, 0, 0, 0.18);
+        --tracking-normal: 0em;
+        --spacing: 0.25rem;
     }
 
     .dark {
-        /* Dark Mode - Deep Blue Grey */
-        --background: 222 47% 11%;
-        --foreground: 210 40% 98%;
-
-        --card: 217 33% 17%;
-        --card-foreground: 210 40% 98%;
-
-        --popover: 222 47% 11%;
-        --popover-foreground: 210 40% 98%;
-
-        --primary: 243 75% 65%;
-        --primary-foreground: 222 47% 11%;
-
-        --secondary: 217.2 32.6% 17.5%;
-        --secondary-foreground: 210 40% 98%;
-
-        --muted: 217.2 32.6% 17.5%;
-        --muted-foreground: 215 20.2% 65.1%;
-
-        --accent: 14 89% 62%;
-        --accent-foreground: 210 40% 98%;
-
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 210 40% 98%;
-
-        --border: 217.2 32.6% 17.5%;
-        --input: 217.2 32.6% 17.5%;
-        --ring: 212.7 26.8% 83.9%;
+        /* Dark mode Coursera-style */
+        --background: 0.12 0.01 255;
+        --foreground: 0.95 0.005 250;
+        --card: 0.18 0.015 255;
+        --card-foreground: 0.95 0.005 250;
+        --popover: 0.15 0.01 255;
+        --popover-foreground: 0.95 0.005 250;
+        --primary: 0.58 0.18 255;
+        --primary-foreground: 1.0 0 0;
+        --secondary: 0.22 0.015 255;
+        --secondary-foreground: 0.95 0.005 250;
+        --muted: 0.20 0.01 255;
+        --muted-foreground: 0.60 0.01 250;
+        --accent: 0.25 0.025 255;
+        --accent-foreground: 0.58 0.18 255;
+        --destructive: 0.55 0.22 25;
+        --destructive-foreground: 1.0 0 0;
+        --border: 0.28 0.015 255;
+        --input: 0.28 0.015 255;
+        --ring: 0.58 0.18 255;
+        --chart-1: 0.58 0.18 255;
+        --chart-2: 0.65 0.15 160;
+        --chart-3: 0.75 0.15 85;
+        --chart-4: 0.60 0.18 150;
+        --chart-5: 0.55 0.20 15;
+        --sidebar: 0.15 0.01 255;
+        --sidebar-foreground: 0.95 0.005 250;
+        --sidebar-primary: 0.58 0.18 255;
+        --sidebar-primary-foreground: 1.0 0 0;
+        --sidebar-accent: 0.25 0.025 255;
+        --sidebar-accent-foreground: 0.58 0.18 255;
+        --sidebar-border: 0.28 0.015 255;
+        --sidebar-ring: 0.58 0.18 255;
+        --font-sans: 'Open Sans', sans-serif;
+        --font-serif: Georgia, serif;
+        --font-mono: Menlo, monospace;
+        --radius: 0.5rem;
+        --shadow-x: 0px;
+        --shadow-y: 2px;
+        --shadow-blur: 4px;
+        --shadow-spread: 0px;
+        --shadow-opacity: 0.15;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+        --shadow-2xs: 0 1px 2px rgba(0, 0, 0, 0.15);
+        --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.2);
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+        --shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.35);
+        --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.4);
+        --shadow-2xl: 0 24px 48px rgba(0, 0, 0, 0.5);
     }
 }
 

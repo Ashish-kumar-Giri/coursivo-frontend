@@ -1,10 +1,10 @@
-
 import { Button } from "@/components/ui/button"
 import { CourseCard } from "@/components/CourseCard"
 import pythonImg from "@/assets/python-course.png"
 import fullstackImg from "@/assets/fullstack-course.png"
 import dsImg from "@/assets/datascience-course.png"
 import leadershipImg from "@/assets/leadership-course.png"
+import heroStudentImg from "@/assets/hero-student.png"
 import { Sparkles, Search, Code, Briefcase, PenTool, LineChart } from "lucide-react"
 
 export default function Home() {
@@ -67,54 +67,86 @@ export default function Home() {
   ]
 
   return (
-    <div className="min-h-screen bg-background pb-20 pt-6">
+    <div className="min-h-screen bg-background pb-20">
       
-      {/* Container-based Soft Hero */}
-      <div className="container-padding mx-auto max-w-7xl">
-        <div className="rounded-[3rem] bg-secondary/40 px-6 py-16 md:px-12 md:py-24 text-center border border-border/50 relative overflow-hidden">
-             
-             {/* Decorative Elements */}
-             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-white/40 blur-3xl rounded-full pointer-events-none -z-10" />
-             
-             <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm font-bold text-black shadow-sm mb-8 animate-in fade-in slide-in-from-bottom-3 duration-700">
-                <Sparkles className="h-4 w-4 text-primary fill-primary/20" />
-                <span>Reinvent your career today</span>
-             </div>
-
-             <h1 className="text-display font-sans text-foreground mb-6 max-w-4xl mx-auto leading-[1.1]">
-               Master <span className="text-primary italic font-serif">skills</span> that matter. <br className="hidden md:block"/> Learn from the best.
-             </h1>
-
-             <p className="max-w-xl mx-auto text-lg text-muted-foreground mb-10">
-               Access 5,000+ premium courses from top universities and companies. Start streaming on-demand video lectures today.
-             </p>
-
-             {/* Search & Action Box */}
-             <div className="max-w-lg mx-auto relative mb-12">
-                <div className="flex items-center bg-white p-2 rounded-2xl shadow-xl shadow-primary/5 border border-border/40">
-                   <Search className="ml-4 h-5 w-5 text-muted-foreground shrink-0" />
-                   <input 
-                      type="text" 
-                      placeholder="What do you want to learn?" 
-                      className="flex-1 bg-transparent border-none outline-none px-4 text-sm h-10 placeholder:text-muted-foreground/70"
-                   />
-                   <Button size="lg" className="rounded-xl px-8 font-bold h-10">Search</Button>
-                </div>
-             </div>
-
-             {/* Categories - Pill Style */}
-             <div className="flex flex-wrap justify-center gap-3">
-                {categories.map((cat, i) => (
-                  <button key={i} className="flex items-center gap-2 bg-white px-5 py-3 rounded-2xl shadow-sm hover:shadow-md transition-all hover:-translate-y-1 border border-border/30">
-                    <div className={`${cat.bg} p-2 rounded-xl`}>
-                       <cat.icon className={`h-4 w-4 ${cat.color}`} />
-                    </div>
-                    <span className="font-bold text-sm text-black">{cat.name}</span>
-                  </button>
-                ))}
-             </div>
+      {/* Coursera-style Hero Section */}
+      <section className="bg-accent/30 border-b border-border">
+        <div className="container-padding mx-auto max-w-7xl">
+          <div className="grid md:grid-cols-2 gap-8 items-center py-12 md:py-20">
+            
+            {/* Left Content */}
+            <div className="space-y-6">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 rounded-md bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary">
+                <Sparkles className="h-4 w-4" />
+                <span>LEARN FROM EXPERTS</span>
+              </div>
+              
+              {/* Headline */}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.15] tracking-tight">
+                Learn directly from world-class educators
+              </h1>
+              
+              {/* Subtitle */}
+              <p className="text-lg text-muted-foreground max-w-lg">
+                Purchase courses and support educators directly. Your payment goes straight to the instructors who create the content you love.
+              </p>
+              
+              {/* Value Prop */}
+              <p className="text-foreground font-medium">
+                🎯 No subscriptions — pay only for what you need
+              </p>
+              
+              {/* CTA Button */}
+              <Button size="lg" className="rounded-lg px-8 h-12 text-base font-semibold">
+                Explore Courses
+              </Button>
+              
+              {/* Secondary info */}
+              <p className="text-sm">
+                <span className="text-primary font-semibold">100% to educators</span>
+                <span className="text-muted-foreground"> — we believe in fair compensation</span>
+              </p>
+            </div>
+            
+            {/* Right Image */}
+            <div className="relative flex justify-center md:justify-end">
+              <img 
+                src={heroStudentImg} 
+                alt="Student achieving career goals" 
+                className="w-full max-w-md md:max-w-lg object-contain"
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Search Bar Section */}
+      <section className="container-padding mx-auto max-w-7xl py-12">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center bg-white p-2 rounded-xl shadow-lg border border-border">
+            <Search className="ml-4 h-5 w-5 text-muted-foreground shrink-0" />
+            <input 
+              type="text" 
+              placeholder="What do you want to learn?" 
+              className="flex-1 bg-transparent border-none outline-none px-4 text-sm h-10 placeholder:text-muted-foreground/70"
+            />
+            <Button size="lg" className="rounded-lg px-8 font-semibold h-10">Search</Button>
+          </div>
+        </div>
+        
+        {/* Categories - Pill Style */}
+        <div className="flex flex-wrap justify-center gap-3 mt-8">
+          {categories.map((cat, i) => (
+            <button key={i} className="flex items-center gap-2 bg-white px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 border border-border/50">
+              <div className={`${cat.bg} p-2 rounded-lg`}>
+                <cat.icon className={`h-4 w-4 ${cat.color}`} />
+              </div>
+              <span className="font-semibold text-sm text-foreground">{cat.name}</span>
+            </button>
+          ))}
+        </div>
+      </section>
 
       {/* Featured Grid */}
       <section className="container-padding mx-auto max-w-7xl mt-24">
