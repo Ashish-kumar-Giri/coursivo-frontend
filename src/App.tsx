@@ -22,23 +22,27 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   )
 }
 
+import { ServerAwakener } from './components/startup/ServerAwakener'
+
 function App() {
   return (
-    <BrowserRouter>
-      <AppLayout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/instructor/dashboard" element={<InstructorDashboard />} />
-          <Route path="/login" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          {/* 404 - Catch all unmatched routes */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </AppLayout>
-      <Toaster position="top-right" richColors />
-    </BrowserRouter>
+    <ServerAwakener>
+      <BrowserRouter>
+        <AppLayout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/instructor/dashboard" element={<InstructorDashboard />} />
+            <Route path="/login" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            {/* 404 - Catch all unmatched routes */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AppLayout>
+        <Toaster position="top-right" richColors />
+      </BrowserRouter>
+    </ServerAwakener>
   )
 }
 
