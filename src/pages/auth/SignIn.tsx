@@ -144,6 +144,41 @@ export default function SignIn() {
             </Button>
           </form>
 
+          {/* Quick Login Options */}
+          <div className="space-y-3 pt-2">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  For Demo Purpose
+                </span>
+              </div>
+            </div>
+
+            <Button 
+              variant="outline" 
+              className="w-full"
+              onClick={() => {
+                setFormData({
+                  email: "sams1@gmail.com",
+                  password: "123456"
+                })
+              }}
+            >
+              Demo Educator Login
+            </Button>
+
+            <Button 
+              variant="outline" 
+              className="w-full opacity-70 cursor-not-allowed"
+              disabled
+            >
+              Student Login (Coming Soon)
+            </Button>
+          </div>
+
           <p className="text-center text-sm text-muted-foreground">
             Don't have an account?{" "}
             <Link to="/signup" className="text-primary hover:underline font-medium">
