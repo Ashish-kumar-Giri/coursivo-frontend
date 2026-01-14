@@ -2,12 +2,34 @@ import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 
+const THEME_KEY = "coursivo_theme"
+
 export function ThemeToggle() {
   const [theme, setTheme] = useState<"light" | "dark">("light")
 
+  // Initialize theme from localStorage or system preference
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains("dark")
-    setTheme(isDark ? "dark" : "light")
+    const savedTheme = localStorage.getItem(THEME_KEY) as "light" | "dark" | null
+    
+    if (savedTheme) {
+      setTheme(savedTheme)
+      if (savedTheme === "dark") {
+        document.documentElement.classList.add("dark")
+      } else {
+        document.documentElement.classList.remove("dark")
+      }
+    } else {
+      // Check system preference
+      const isDark = document.documentElement.classList.contains("dark") ||
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      
+      const initialTheme = isDark ? "dark" : "light"
+      setTheme(initialTheme)
+      
+      if (initialTheme === "dark") {
+        document.documentElement.classList.add("dark")
+      }
+    }
   }, [])
 
   const toggleTheme = () => {
@@ -20,6 +42,8 @@ export function ThemeToggle() {
       root.classList.remove("dark")
     }
     
+    // Save to localStorage
+    localStorage.setItem(THEME_KEY, newTheme)
     setTheme(newTheme)
   }
 
