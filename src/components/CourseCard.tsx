@@ -1,4 +1,4 @@
-import { Heart, Star, User } from "lucide-react"
+import { Star } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { Course } from "@/types/course.types"
 
@@ -24,67 +24,52 @@ export function CourseCard({ course, className }: CourseCardProps) {
 
   return (
     <div className={cn(
-      "group relative flex flex-col rounded-[2rem] bg-card p-4 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-border/40",
+      "group cursor-pointer",
       className
     )}>
-      {/* Inset Image */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted">
+      {/* Image */}
+      <div className="relative aspect-video w-full overflow-hidden bg-muted mb-2">
         <img
           src={thumbnailUrl}
           alt={title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="h-full w-full object-cover"
           onError={(e) => {
             // Fallback for broken images
-            e.currentTarget.src = "https://placehold.co/400x300/1e293b/ffffff?text=Course"
+            e.currentTarget.src = "https://placehold.co/400x225/e5e7eb/6b7280?text=Course"
           }}
         />
-        <button className="absolute top-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-foreground/70 backdrop-blur-sm transition-colors hover:bg-white hover:text-red-500 shadow-sm">
-          <Heart className="h-4 w-4" />
-        </button>
-        {isFree && (
-          <span className="absolute top-3 left-3 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-md">
-            FREE
-          </span>
-        )}
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col pt-4 px-1">
-        <h3 className="line-clamp-2 text-lg font-bold text-foreground leading-snug mb-2">
+      <div className="space-y-1">
+        <h3 className="font-bold text-base text-foreground line-clamp-2 leading-tight">
           {title}
         </h3>
         
-        <p className="line-clamp-2 text-sm text-muted-foreground mb-3">
-          {description}
+        <p className="text-xs text-muted-foreground">
+          {instructor.fullName}
         </p>
-
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-          <div className="flex h-5 w-5 items-center justify-center rounded-full bg-secondary">
-             <User className="h-3 w-3" />
-          </div>
-          <span className="truncate">By {instructor.fullName}</span>
-        </div>
         
-        {/* Spacer to push details to bottom */}
-        <div className="mt-auto flex items-end justify-between border-t border-border/40 pt-3">
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1.5">
-              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <div className="flex items-baseline gap-1">
-                <span className="font-bold text-foreground">4.5</span>
-                <span className="text-xs text-muted-foreground">(0)</span>
-              </div>
-            </div>
+        <div className="flex items-center gap-1">
+          <span className="font-bold text-sm text-foreground">4.5</span>
+          <div className="flex items-center gap-0.5">
+            {[...Array(5)].map((_, i) => (
+              <Star 
+                key={i} 
+                className={cn(
+                  "h-3 w-3",
+                  i < 4 ? "fill-orange-400 text-orange-400" : "fill-orange-200 text-orange-200"
+                )} 
+              />
+            ))}
           </div>
+          <span className="text-xs text-muted-foreground">(1,234)</span>
+        </div>
 
-          <div className="flex flex-col items-end">
-            <span className={cn(
-              "text-lg font-bold",
-              isFree ? "text-green-600" : "text-primary"
-            )}>
-              {formatPrice(price, currency, isFree)}
-            </span>
-          </div>
+        <div className="flex items-baseline gap-2">
+          <span className="font-bold text-base text-foreground">
+            {formatPrice(price, currency, isFree)}
+          </span>
         </div>
       </div>
     </div>

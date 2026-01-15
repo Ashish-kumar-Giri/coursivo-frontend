@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { Menu, X, BookOpen, LayoutDashboard, User, Settings, LogOut, GraduationCap, Users } from "lucide-react"
+import { Menu, X, LayoutDashboard, User, Settings, LogOut, GraduationCap, Users } from "lucide-react"
 import { toast } from "sonner"
 import { ThemeToggle } from "./ThemeToggle"
 import { Button } from "@/components/ui/button"
@@ -48,25 +48,22 @@ export function Navbar() {
   const dashboardLink = user?.role === "INSTRUCTOR" ? "/instructor/dashboard" : "/dashboard"
 
   return (
-    <nav className="bg-background sticky top-0 z-50 w-full border-b shadow-sm">
+    <nav className="bg-background sticky top-0 z-50 w-full border-b border-border shadow-sm">
       <div className="container-padding mx-auto flex h-16 max-w-7xl items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center bg-primary text-primary-foreground">
-            <BookOpen className="h-5 w-5" />
-          </div>
-          <span className="text-xl font-bold tracking-tight text-foreground font-serif">
-            Coursivo
+        <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <span className="text-2xl font-bold tracking-tight text-foreground">
+            coursivo
           </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex md:items-center md:gap-8">
+        <div className="hidden md:flex md:items-center md:gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="text-sm font-normal text-foreground hover:text-primary transition-colors"
             >
               {link.name}
             </Link>

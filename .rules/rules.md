@@ -1,132 +1,370 @@
-# Design System, Theme, and Styling Rules (Source of Truth)
+# Styling and Theme Rules (Source of Truth)
 
-These rules define **how styling and theming work in this project**. Follow them to ensure consistent results across editors/models.
+These rules define **how styling and theming work in this project**. Follow them strictly to ensure consistent results across editors, AI models, and developers.
 
-## Theme system (how dark mode works)
+## Theme System (Dark Mode)
 
-- **Theme is controlled by a class on the `<html>` element**: `light` or `dark`.
-- **Design tokens live in `src/app/globals.css`** as CSS variables in `:root` (light) and `.dark` (dark).
-- Tailwind utilities are mapped to those tokens via Tailwind v4 `@theme inline` in `globals.css`.
+- **Theme is controlled by `next-themes`** package
+- **Theme class is applied to the `<html>` element**: `light` or `dark`
+- **Design tokens live in `src/index.css`** as CSS variables using OKLCH color space
+- **Tailwind is configured** in `tailwind.config.js` to use these CSS variables
 
-### Required usage
+### Color Token Structure
 
-- **Use semantic Tailwind colors backed by tokens**, not hard-coded colors:
-  - Use: `bg-background`, `text-foreground`, `bg-card`, `text-muted-foreground`, `border-border`, `ring-ring`, etc.
-  - Avoid: `text-slate-900`, `bg-white/60`, `text-blue-600`, `#hex`, and arbitrary colors like `bg-[#...]` in new code.
-- **If you must add a new color/token**, add it in **both** `:root` and `.dark`, and (if needed) expose it in the `@theme inline` mapping.
-- **Respect reduced motion**: theme transitions are intentionally limited to theme toggles (see `.theme-transition` in `globals.css`).
+All colors use OKLCH format: `oklch(lightness chroma hue / alpha)`
 
-## Styling approach (what to use by default)
+```css
+:root {
+  --background: 1.0 0 0;  /* Pure white */
+  --foreground: 0.20 0.01 255;  /* Dark text */
+  --primary: 0.45 0.20 280;  /* Udemy purple */
+  /* ... more tokens */
+}
 
-### Default stack
+.dark {
+  --background: 0.15 0.01 255;  /* Dark gray */
+  --foreground: 0.95 0.005 250;  /* Light text */
+  --primary: 0.60 0.20 280;  /* Lighter purple */
+  /* ... more tokens */
+}
+```
 
-- **Tailwind utilities first** for layout, spacing, and small one-off styling.
-- **shadcn/ui primitives** under `src/components/ui/*` for common UI building blocks.
-  - Use `Button`, `Card`, `Input`, `DropdownMenu`, `Sheet`, etc.
-  - Always merge class names with `cn()` from `src/lib/utils.ts`.
-- **Global CSS is allowed only in `src/app/globals.css`** and should remain token/utility focused (no page-specific styling there).
+### Required Usage
 
-### Avoid
+- **Always use semantic Tailwind colors backed by tokens**:
+  - ✅ Use: `bg-background`, `text-foreground`, `bg-card`, `text-muted-foreground`, `border-border`, `bg-primary`
+  - ❌ Avoid: `text-slate-900`, `bg-white`, `text-blue-600`, `#hex`, `bg-[#...]`
+- **If you must add a new color**, add it in **both** `:root` and `.dark` in `src/index.css`
+- **Test in both light and dark modes** before committing
 
-- Avoid introducing new ad-hoc CSS files or scattered “one-off” component CSS.
-- Avoid inline styles for typography/spacing. Prefer the established utility classes and tokens.
+## Styling Approach
 
-## Typography system (use these classes)
+### Default Stack
 
-Typography utilities are defined in `src/app/globals.css`. Prefer them over custom font stacks and inline styles.
+1. **Tailwind utilities first** for all layout, spacing, colors, and styling
+2. **shadcn/ui components** from `src/components/ui/*` for common UI elements
+   - Use: `Button`, `Input`, `Card`, `DropdownMenu`, etc.
+   - Always merge classes with `cn()` from `src/lib/utils.ts`
+3. **Global CSS only in `src/index.css`** - no scattered CSS files
 
-- **Headlines**
-  - `.text-display` (hero headline)
-  - `.text-h1`, `.text-h2`, `.text-h3`
-- **Body**
-  - `.text-body`, `.text-body-lg`, `.text-small`, `.text-meta`
-- **Fonts**
-  - Use the font variables injected by `src/app/layout.tsx`.
-  - Prefer `.font-display` / `.text-display` / `.text-h*` rather than setting `fontFamily` inline.
+### What to Avoid
 
-## Spacing & layout conventions
+- ❌ No new CSS files or component-specific stylesheets
+- ❌ No inline styles for colors, spacing, or typography
+- ❌ No arbitrary values unless absolutely necessary
+- ❌ No hard-coded colors or magic numbers
 
-Use these global layout helpers for consistent section rhythm:
+## Typography System
 
-- **Section spacing**: `.section-padding`
-- **Horizontal gutters**: `.container-padding`
+Typography utilities are defined in `src/index.css` using Inter font.
 
-Prefer responsive utilities and `clamp()`-based helpers already provided over inventing new spacing scales.
+### Font Family
 
-## Surfaces, borders, and “glass” look
+```css
+--font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+```
 
-This project uses a “calm authority / glass” aesthetic driven by tokens:
+### Typography Classes
 
-- **Default surfaces**
-  - Use `bg-card text-card-foreground` for solid cards.
-  - Use `bg-popover text-popover-foreground` for overlays/menus.
-  - Use `border-border` for borders.
-- **Glass surfaces**
-  - Use `.glass-surface` for frosted panels (token-driven).
-  - Use `.glass-card` for frosted cards (has dark-mode override).
-- **Borders**
-  - Prefer `border-border` / token-based borders over arbitrary opacity borders.
+Use these predefined classes:
 
-## Accent, gradients, and glow
+- **Display/Hero**: `.text-display` - Large hero headlines (3xl-6xl)
+- **Headings**: `.text-h1`, `.text-h2`, `.text-h3`
+- **Body**: `.text-body` - Standard body text
+- **Utility**: Use Tailwind's `text-sm`, `text-base`, `text-lg`, etc.
 
-Accent is defined by `--accent-start` and `--accent-end`.
+### Font Weights
 
-- Use `.text-accent-gradient` for gradient text.
-- Use `.glow-sm`, `.glow-md`, `.glow-lg` sparingly (only to emphasize primary actions or key highlights).
-- Background effects available:
-  - `.bg-grid`, `.bg-grid-fade`
-  - `.bg-aurora`, `.bg-stars`, `.bg-noise`
+- Regular: `font-normal` (400)
+- Medium: `font-medium` (500)
+- Semibold: `font-semibold` (600)
+- Bold: `font-bold` (700)
+- Extrabold: `font-extrabold` (800)
 
-## Buttons and interactive elements
+## Spacing & Layout
 
-### Default rule
+### Container Standards
 
-- Use `Button` from `src/components/ui/button.tsx` for new buttons.
-- Choose variants consistently:
-  - **Primary**: `variant="default"`
-  - **Secondary**: `variant="secondary"`
-  - **Subtle**: `variant="ghost"`
-  - **Borders**: `variant="outline"`
-  - **Links**: `variant="link"`
+```tsx
+<div className="container-padding mx-auto max-w-7xl">
+  {/* Content */}
+</div>
+```
 
-### Marketing/landing CTAs (allowed)
+- **Max Width**: `max-w-7xl` (1280px)
+- **Padding**: Use `.container-padding` utility
+- **Centering**: Always use `mx-auto`
 
-If a button must be an `<a>` for navigation/anchors, keep styling consistent by using the global button helpers when appropriate:
+### Section Spacing
 
-- `.btn-cta` for gradient CTA
-- `.btn-primary`, `.btn-secondary`, `.btn-ghost`, `.btn-outline` for pill-style buttons
+```tsx
+<section className="section-padding">
+  {/* Content */}
+</section>
+```
 
-### Interaction requirements
+- **Vertical Padding**: Use `.section-padding` utility (py-8 md:py-16)
+- **Consistent rhythm**: All major sections should use this
 
-Every interactive element must have:
+### Common Spacing Values
 
-- Visible hover state
-- Visible focus state (keyboard)
-- Immediate feedback without excessive motion
+- Extra small: `gap-2` (8px)
+- Small: `gap-4` (16px)
+- Medium: `gap-6` (24px)
+- Large: `gap-8` (32px)
+- Extra large: `gap-12` (48px)
 
-## Motion & animation
+## Component Patterns
 
-- Use `framer-motion` where motion adds clarity (entrance, subtle emphasis).
-- Keep durations short and easing smooth.
-- Never add “decorative” motion that distracts.
-- Respect `prefers-reduced-motion` (avoid long/infinite animations; provide fallbacks).
+### Buttons
 
-## Accessibility and contrast
+Always use the `Button` component from `src/components/ui/button.tsx`:
 
-- Ensure text contrast is acceptable in both themes.
-- Don’t rely on color alone to convey meaning.
-- Keep focus rings intact (shadcn components already provide them).
+```tsx
+import { Button } from "@/components/ui/button"
 
-## When modifying existing sections
+// Primary action
+<Button size="lg" className="h-12 px-8 font-semibold">
+  Click Me
+</Button>
 
-- Prefer refactors toward tokens and global utilities, **but don’t churn** large sections unless necessary.
-- If you touch a section that hard-codes colors, align it toward token-based classes as part of the change (when safe).
+// Secondary action
+<Button variant="outline" size="lg" className="h-12 px-8 font-semibold">
+  Learn More
+</Button>
+```
 
-## Quick checklist for any UI change
+**Variants**:
+- `default` - Primary purple button
+- `outline` - Bordered button
+- `ghost` - Transparent button
+- `link` - Link-styled button
 
-- Uses token-based colors (`bg-background`, `text-foreground`, etc.)
-- Works in both `light` and `dark`
-- Uses `cn()` for class composition
-- Uses shadcn primitives when applicable
-- No new arbitrary hex/colors unless absolutely required (and then tokenized)
+**Sizes**:
+- `sm` - Small (h-9)
+- `default` - Medium (h-10)
+- `lg` - Large (h-11)
 
+### Cards
+
+```tsx
+<div className="bg-card border border-border shadow-sm p-6">
+  {/* Card content */}
+</div>
+```
+
+**Card Patterns**:
+- Background: `bg-card`
+- Border: `border border-border`
+- Shadow: `shadow-sm` (hover: `shadow-lg`)
+- Padding: `p-4` to `p-8`
+- Corners: Sharp (default) or minimal (`rounded-sm`)
+
+### Course Cards
+
+Specific pattern for course display:
+
+```tsx
+<div className="group cursor-pointer">
+  {/* Image */}
+  <div className="aspect-video bg-muted mb-2">
+    <img src={thumbnailUrl} alt={title} className="w-full h-full object-cover" />
+  </div>
+  
+  {/* Content */}
+  <div className="space-y-1">
+    <h3 className="font-bold text-base line-clamp-2">{title}</h3>
+    <p className="text-xs text-muted-foreground">{instructor}</p>
+    <div className="flex items-center gap-1">
+      {/* Rating */}
+    </div>
+    <div className="font-bold text-base">{price}</div>
+  </div>
+</div>
+```
+
+## Surfaces & Borders
+
+### Default Surfaces
+
+- **Page background**: `bg-background`
+- **Card background**: `bg-card`
+- **Muted sections**: `bg-muted/30` or `bg-muted/20`
+- **Borders**: `border-border`
+
+### Border Patterns
+
+- Standard: `border border-border`
+- Top only: `border-t border-border`
+- Bottom only: `border-b border-border`
+- No border: Don't add border class
+
+## Gradients (Use Sparingly)
+
+Gradients should be minimal and only for emphasis:
+
+### Allowed Gradient Patterns
+
+```tsx
+// Subtle background gradient (hero sections only)
+<div className="bg-gradient-to-br from-primary/5 via-background to-accent/5">
+
+// Gradient text (headlines only)
+<span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+  Emphasized Text
+</span>
+```
+
+### Gradient Rules
+
+- ✅ Hero sections: Very subtle background gradients
+- ✅ Text emphasis: Gradient on key words in headlines
+- ❌ No gradients on buttons
+- ❌ No gradients on cards
+- ❌ No colored glows or shadows
+
+## Shadows
+
+Use shadows sparingly for depth:
+
+- **Minimal**: `shadow-sm` - Default for cards
+- **Medium**: `shadow-md` - Hover states
+- **Large**: `shadow-lg` - Modals, dropdowns
+- **Extra Large**: `shadow-xl` - Hero cards, featured elements
+
+**Never use**:
+- Colored shadows
+- Glow effects
+- Multiple layered shadows
+
+## Transitions & Animations
+
+### Standard Transitions
+
+```tsx
+className="transition-all duration-200"
+```
+
+- **Duration**: 200ms (fast and snappy)
+- **Easing**: Default (ease)
+- **Properties**: `transition-all` or specific like `transition-colors`
+
+### Animation Rules
+
+- ✅ Hover states: Color changes, shadow changes
+- ✅ Focus states: Ring appearance
+- ✅ Loading states: Spin animation
+- ❌ No translations on hover
+- ❌ No scale transforms
+- ❌ No decorative animations
+- ❌ No infinite animations (except loading)
+
+## Accessibility
+
+### Contrast Requirements
+
+- Text on background: Minimum 4.5:1 ratio
+- Large text (18px+): Minimum 3:1 ratio
+- Interactive elements: Clear focus states
+
+### Focus States
+
+- Always visible: `focus:outline-none focus:ring-2 focus:ring-ring`
+- Never remove focus indicators
+- Test keyboard navigation
+
+### Semantic HTML
+
+- Use proper heading hierarchy (h1 → h2 → h3)
+- Use semantic elements (`<nav>`, `<main>`, `<section>`, `<article>`)
+- Add ARIA labels where needed
+
+## Responsive Design
+
+### Breakpoints
+
+- `sm`: 640px
+- `md`: 768px
+- `lg`: 1024px
+- `xl`: 1280px
+- `2xl`: 1536px
+
+### Mobile-First Approach
+
+```tsx
+// Mobile default, then larger screens
+className="text-base md:text-lg lg:text-xl"
+className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+```
+
+### Common Responsive Patterns
+
+- **Typography**: Scale up on larger screens
+- **Grids**: More columns on larger screens
+- **Spacing**: Increase padding/margins on larger screens
+- **Layout**: Stack on mobile, side-by-side on desktop
+
+## Quick Checklist for Any UI Change
+
+Before committing any UI changes, verify:
+
+- [ ] Uses token-based colors (`bg-background`, `text-foreground`, etc.)
+- [ ] Works in both light and dark mode
+- [ ] Uses `cn()` for class composition
+- [ ] Uses shadcn/ui components where applicable
+- [ ] No arbitrary hex colors or inline styles
+- [ ] Proper spacing using Tailwind scale
+- [ ] Fast transitions (200ms)
+- [ ] Accessible (contrast, focus states, semantic HTML)
+- [ ] Responsive on all screen sizes
+- [ ] Follows Inter font system
+- [ ] Minimal shadows and no glows
+- [ ] Clean, professional appearance
+
+## Common Mistakes to Avoid
+
+1. **Hard-coding colors**: Always use semantic tokens
+2. **Inconsistent spacing**: Use the Tailwind spacing scale
+3. **Over-animating**: Keep it simple and fast
+4. **Ignoring dark mode**: Test both themes
+5. **Arbitrary values**: Use predefined utilities
+6. **Complex hover effects**: Keep it subtle
+7. **Missing focus states**: Always visible for accessibility
+8. **Inconsistent typography**: Use defined classes
+9. **Too many gradients**: Use very sparingly
+10. **Decorative elements**: Keep it minimal and functional
+
+## When Modifying Existing Code
+
+- Prefer refactors toward tokens and utilities
+- Don't break existing functionality
+- Test in both light and dark modes
+- Maintain consistent spacing and typography
+- Keep the minimal, clean aesthetic
+- Document any new patterns in this file
+
+## File Structure
+
+```
+src/
+├── index.css           # Global styles, CSS variables, utilities
+├── components/
+│   ├── ui/            # shadcn/ui components
+│   ├── layout/        # Layout components (Navbar, Footer)
+│   └── CourseCard.tsx # Feature components
+├── pages/             # Page components
+└── lib/
+    └── utils.ts       # cn() utility
+```
+
+## Summary
+
+This project uses a **clean, minimal, Udemy-inspired design system** with:
+- **Inter font** for all typography
+- **OKLCH color tokens** for consistent theming
+- **Tailwind utilities** for all styling
+- **Minimal decorative elements** for professional appearance
+- **Fast, subtle interactions** for good UX
+- **Full dark mode support** with semantic tokens
+
+Always prioritize **clarity, simplicity, and professionalism** over decorative flourishes.
