@@ -13,6 +13,7 @@ export default function SignIn() {
   const setAuth = useAuthStore((state) => state.setAuth)
   
   const [isLoading, setIsLoading] = useState(false)
+  const [showDemoPassword, setShowDemoPassword] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -157,26 +158,51 @@ export default function SignIn() {
               </div>
             </div>
 
-            <Button 
-              variant="outline" 
-              className="w-full"
-              onClick={() => {
-                setFormData({
-                  email: "sams1@gmail.com",
-                  password: "123456"
-                })
-              }}
-            >
-              Demo Educator Login
-            </Button>
+            {/* Demo Educator Credentials */}
+            <div className="border rounded-lg p-3 space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium text-muted-foreground">Demo Educator</p>
+                  <p className="text-sm font-mono truncate">rahul@gmail.com</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-mono">
+                      {showDemoPassword ? "3Tr3ogG(!}zy55hl>5E" : "••••••••••••••••••"}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setShowDemoPassword(!showDemoPassword)}
+                      className="text-xs text-primary hover:underline"
+                    >
+                      {showDemoPassword ? "Hide" : "Show"}
+                    </button>
+                  </div>
+                </div>
+                <Button 
+                  size="sm"
+                  variant="outline"
+                  className="shrink-0 h-8 px-3"
+                  onClick={() => {
+                    setFormData({
+                      email: "rahul@gmail.com",
+                      password: "3Tr3ogG(!}zy55hl>5E"
+                    })
+                    toast.info("Demo credentials applied!")
+                  }}
+                >
+                  Apply
+                </Button>
+              </div>
+            </div>
 
-            <Button 
-              variant="outline" 
-              className="w-full opacity-70 cursor-not-allowed"
-              disabled
-            >
-              Student Login (Coming Soon)
-            </Button>
+            {/* Student Login - Coming Soon */}
+            <div className="border rounded-lg p-3 opacity-60">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex-1">
+                  <p className="text-xs font-medium text-muted-foreground">Student Login</p>
+                  <p className="text-sm text-muted-foreground">(Coming Soon)</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <p className="text-center text-sm text-muted-foreground">
