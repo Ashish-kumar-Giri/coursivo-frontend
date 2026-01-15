@@ -20,7 +20,7 @@ function formatPrice(price: number, currency: string, isFree: boolean): string {
 }
 
 export function CourseCard({ course, className }: CourseCardProps) {
-  const { title, description, price, currency, isFree, thumbnailUrl, instructor } = course
+  const { title, price, currency, isFree, thumbnailUrl, instructor } = course
 
   return (
     <div className={cn(
