@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { CourseCard } from "@/components/CourseCard"
 import { courseService } from "@/api/course.service"
-import { useIsAuthenticated } from "@/store/auth.store"
 import type { Course } from "@/types/course.types"
 import { 
   Search, 
@@ -14,7 +13,6 @@ import {
 } from "lucide-react"
 
 export default function Home() {
-  const isAuthenticated = useIsAuthenticated()
   const [courses, setCourses] = useState<Course[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -37,9 +35,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       
-      {/* Hero Section - Only show when not authenticated */}
-      {!isAuthenticated && (
-        <section className="relative bg-gradient-to-br from-primary/5 via-background to-accent/5 border-b border-border overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-primary/5 via-background to-accent/5 border-b border-border overflow-hidden">
           {/* Subtle background pattern */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(120,119,198,0.05),transparent_50%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(120,119,198,0.03),transparent_50%)]" />
@@ -130,7 +127,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-      )}
 
       {/* Search Bar Section */}
       <section className="bg-muted/30 border-b border-border">
@@ -198,9 +194,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Become an Instructor CTA - Only for non-authenticated */}
-      {!isAuthenticated && (
-        <section className="bg-muted/30 border-y border-border">
+      {/* Become an Instructor CTA */}
+      <section className="bg-muted/30 border-y border-border">
           <div className="container-padding mx-auto max-w-7xl py-16">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
@@ -225,7 +220,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-      )}
     </div>
   )
 }

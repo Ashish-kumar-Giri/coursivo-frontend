@@ -3,6 +3,7 @@ import { useUser } from "@/store/auth.store"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { BookOpen, Users, DollarSign, TrendingUp, Plus, Eye, Edit } from "lucide-react"
+import { ThemeToggle } from "@/components/layout/ThemeToggle"
 
 export default function InstructorDashboard() {
   const user = useUser()
@@ -13,32 +14,32 @@ export default function InstructorDashboard() {
       value: "0",
       icon: BookOpen,
       description: "Published courses",
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
+      color: "text-primary",
+      bgColor: "bg-primary/10",
     },
     {
       title: "Total Students",
       value: "0",
       icon: Users,
       description: "Enrolled students",
-      color: "text-purple-600",
-      bgColor: "bg-purple-50",
+      color: "text-primary",
+      bgColor: "bg-primary/10",
     },
     {
       title: "Total Revenue",
       value: "₹0",
       icon: DollarSign,
       description: "This month",
-      color: "text-green-600",
-      bgColor: "bg-green-50",
+      color: "text-primary",
+      bgColor: "bg-primary/10",
     },
     {
       title: "Avg. Rating",
       value: "0.0",
       icon: TrendingUp,
       description: "Course ratings",
-      color: "text-yellow-600",
-      bgColor: "bg-yellow-50",
+      color: "text-primary",
+      bgColor: "bg-primary/10",
     },
   ]
 
@@ -47,25 +48,31 @@ export default function InstructorDashboard() {
   ]
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-full bg-muted/30">
       {/* Header */}
-      <div className="bg-background border-b">
-        <div className="container-padding mx-auto max-w-7xl py-8">
+      <div className="bg-background border-b border-border">
+        <div className="container-padding mx-auto max-w-7xl py-6 lg:py-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-foreground mb-2">
+              <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">
                 Welcome back, {user?.fullName || "Instructor"}!
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-sm lg:text-base">
                 Manage your courses and track your performance
               </p>
             </div>
-            <Link to="/instructor/courses/create">
-              <Button size="lg" className="gap-2">
-                <Plus className="h-4 w-4" />
-                Create Course
-              </Button>
-            </Link>
+            <div className="flex items-center gap-3">
+              <div className="hidden lg:block">
+                <ThemeToggle />
+              </div>
+              <Link to="/instructor/courses/create">
+                <Button size="lg" className="gap-2">
+                  <Plus className="h-4 w-4" />
+                  <span className="hidden sm:inline">Create Course</span>
+                  <span className="sm:hidden">New</span>
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

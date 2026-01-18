@@ -4,6 +4,7 @@ import { Menu, X, LayoutDashboard, User, Settings, LogOut, GraduationCap, Users 
 import { toast } from "sonner"
 import { ThemeToggle } from "./ThemeToggle"
 import { Button } from "@/components/ui/button"
+import { Logo } from "@/components/ui/Logo"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -52,9 +53,7 @@ export function Navbar() {
       <div className="container-padding mx-auto flex h-16 max-w-7xl items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          <span className="text-2xl font-bold tracking-tight text-foreground">
-            coursivo
-          </span>
+          <Logo size="md" className="text-foreground" />
         </Link>
 
         {/* Desktop Navigation */}
