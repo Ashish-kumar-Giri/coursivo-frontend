@@ -13,8 +13,11 @@ const NotFound = lazy(() => import('./pages/NotFound'))
 const SignIn = lazy(() => import('./pages/auth/SignIn'))
 const SignUp = lazy(() => import('./pages/auth/SignUp'))
 
-// Instructor pages - lazy loaded separately
+// Layouts - lazy loaded
 const InstructorLayout = lazy(() => import('./components/layout/InstructorLayout').then(m => ({ default: m.InstructorLayout })))
+const StudentLayout = lazy(() => import('./components/layout/StudentLayout').then(m => ({ default: m.StudentLayout })))
+
+// Instructor pages - lazy loaded
 const InstructorDashboard = lazy(() => import('./pages/instructor/InstructorDashboard'))
 const CourseBuilder = lazy(() => import('./pages/instructor/CourseBuilder'))
 
@@ -32,10 +35,21 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   const isAuthPage = location.pathname === '/login' || location.pathname === '/signup'
   const isInstructorPage = location.pathname.startsWith('/instructor')
+  const isStudentDashboard = location.pathname === '/dashboard' || 
+    location.pathname.startsWith('/my-courses') ||
+    location.pathname.startsWith('/progress') ||
+    location.pathname.startsWith('/certificates') ||
+    location.pathname.startsWith('/wishlist') ||
+    location.pathname.startsWith('/watch-later') ||
+    location.pathname.startsWith('/settings') ||
+    location.pathname.startsWith('/help')
+
+  // Don't show Navbar for auth pages and dashboard layouts (they have their own sidebar)
+  const showNavbar = !isAuthPage && !isInstructorPage && !isStudentDashboard
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
-      {!isAuthPage && !isInstructorPage && <Navbar />}
+      {showNavbar && <Navbar />}
       <main>{children}</main>
     </div>
   )
@@ -48,9 +62,15 @@ function App() {
         <AppLayout>
           <Suspense fallback={<PageLoader />}>
             <Routes>
+              {/* Public routes with Navbar */}
               <Route path="/" element={<Home />} />
               <Route path="/courses" element={<Courses />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              
+              {/* Student Dashboard Routes - with sidebar layout */}
+              <Route element={<StudentLayout />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                {/* Add more student routes here */}
+              </Route>
               
               {/* Instructor Routes - with sidebar layout */}
               <Route path="/instructor" element={<InstructorLayout />}>
@@ -59,8 +79,10 @@ function App() {
                 <Route path="courses/:id/edit" element={<CourseBuilder />} />
               </Route>
 
+              {/* Auth routes */}
               <Route path="/login" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
+              
               {/* 404 - Catch all unmatched routes */}
               <Route path="*" element={<NotFound />} />
             </Routes>

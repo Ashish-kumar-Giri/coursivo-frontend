@@ -47,10 +47,10 @@ export default function Dashboard() {
   ]
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-full bg-muted/30">
       {/* Header */}
       <div className="bg-background border-b">
-        <div className="container-padding mx-auto max-w-7xl py-8">
+        <div className="p-6 lg:p-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
             Welcome back, {user?.fullName || "Student"}!
           </h1>
@@ -61,7 +61,7 @@ export default function Dashboard() {
       </div>
 
       {/* Main Content */}
-      <div className="container-padding mx-auto max-w-7xl py-8">
+      <div className="p-6 lg:p-8">
         {/* Stats Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
           {stats.map((stat, index) => (

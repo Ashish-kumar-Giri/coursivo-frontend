@@ -51,7 +51,7 @@ export default function InstructorDashboard() {
     <div className="min-h-full bg-muted/30">
       {/* Header */}
       <div className="bg-background border-b border-border">
-        <div className="container-padding mx-auto max-w-7xl py-6 lg:py-8">
+        <div className="p-6 lg:p-8">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">
@@ -78,7 +78,7 @@ export default function InstructorDashboard() {
       </div>
 
       {/* Main Content */}
-      <div className="container-padding mx-auto max-w-7xl py-8">
+      <div className="p-6 lg:p-8">
         {/* Stats Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
           {stats.map((stat, index) => (
