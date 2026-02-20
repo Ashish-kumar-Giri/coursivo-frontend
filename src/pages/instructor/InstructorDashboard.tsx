@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { useUser } from "@/store/auth.store"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { BookOpen, Users, DollarSign, TrendingUp, Plus } from "lucide-react"
+import { BookOpen, Users, Plus } from "lucide-react"
 import { ThemeToggle } from "@/components/layout/ThemeToggle"
 import { SearchBar } from "@/components/ui/SearchBar"
 
@@ -23,22 +23,6 @@ export default function InstructorDashboard() {
       value: "0",
       icon: Users,
       description: "Enrolled students",
-      color: "text-primary",
-      bgColor: "bg-primary/10",
-    },
-    {
-      title: "Total Revenue",
-      value: "₹0",
-      icon: DollarSign,
-      description: "This month",
-      color: "text-primary",
-      bgColor: "bg-primary/10",
-    },
-    {
-      title: "Avg. Rating",
-      value: "0.0",
-      icon: TrendingUp,
-      description: "Course ratings",
       color: "text-primary",
       bgColor: "bg-primary/10",
     },
