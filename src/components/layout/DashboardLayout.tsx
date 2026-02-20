@@ -31,7 +31,7 @@ export function DashboardLayout({ config, storageKey }: DashboardLayoutProps) {
   return (
     <div className="flex h-screen bg-background overflow-hidden">
       {/* Desktop Sidebar */}
-      <div className="hidden lg:flex">
+      <div className="hidden lg:flex shrink-0">
         <Sidebar config={config} isCollapsed={isCollapsed} onToggle={handleToggleCollapse} />
       </div>
 

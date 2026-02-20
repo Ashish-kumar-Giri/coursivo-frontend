@@ -1,17 +1,16 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { getInitials } from "@/lib/user-utils"
 import { Logo, LogoIcon } from "@/components/ui/Logo"
 import { useAuthStore, useUser } from "@/store/auth.store"
 import { toast } from "sonner"
 import {
   LogOut,
-  Plus,
-  Mail,
+  Settings,
+  HelpCircle,
   MoreVertical,
   ChevronsLeft,
   ChevronsRight,
-  Search,
 } from "lucide-react"
 import {
   DropdownMenu,
@@ -40,14 +39,31 @@ export interface SidebarConfig {
   quickCreateHref?: string
 }
 
-// Get user initials from full name
-function getInitials(name: string): string {
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2)
+
+// Reusable nav item component to avoid repetition
+function SidebarNavItem({ item, isCollapsed, isActive }: { 
+  item: SidebarItem
+  isCollapsed: boolean
+  isActive: boolean 
+}) {
+  return (
+    <li>
+      <Link
+        to={item.href}
+        title={isCollapsed ? item.name : undefined}
+        className={cn(
+          "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-sm transition-colors whitespace-nowrap",
+          isCollapsed && "justify-center px-2",
+          isActive
+            ? "bg-sidebar-accent text-sidebar-foreground"
+            : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+        )}
+      >
+        <item.icon className={cn("shrink-0", isCollapsed ? "h-5 w-5" : "h-4 w-4")} />
+        {!isCollapsed && <span>{item.name}</span>}
+      </Link>
+    </li>
+  )
 }
 
 interface SidebarProps {
@@ -79,9 +95,10 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
   return (
     <aside 
       className={cn(
-        "flex h-screen flex-col bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out",
+        "flex h-screen flex-col bg-sidebar border-r border-sidebar-border transition-[width] duration-300 ease-in-out overflow-hidden",
         isCollapsed ? "w-16" : "w-64"
       )}
+      style={{ willChange: 'width' }}
     >
       {/* Logo / Brand */}
       <div className={cn(
@@ -100,69 +117,12 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
         </Link>
       </div>
 
-      {/* Quick Create Button - Only show if configured */}
-      {config.quickCreateHref && (
-        <div className={cn("p-3 shrink-0", isCollapsed && "px-2")}>
-          {isCollapsed ? (
-            <div className="flex flex-col gap-2">
-              <Button 
-                size="icon" 
-                className="w-full h-10"
-                onClick={() => navigate(config.quickCreateHref!)}
-                title={config.quickCreateLabel}
-              >
-                <Plus className="h-5 w-5" />
-              </Button>
-              <Button 
-                variant="outline" 
-                size="icon" 
-                className="w-full h-10"
-                title="Messages"
-              >
-                <Mail className="h-4 w-4" />
-              </Button>
-            </div>
-          ) : (
-            <div className="flex gap-2">
-              <Button 
-                className="flex-1 gap-2 font-semibold"
-                onClick={() => navigate(config.quickCreateHref!)}
-              >
-                <Plus className="h-4 w-4" />
-                {config.quickCreateLabel || "Quick Create"}
-              </Button>
-              <Button variant="outline" size="icon" title="Messages">
-                <Mail className="h-4 w-4" />
-              </Button>
-            </div>
-          )}
-        </div>
-      )}
-
       {/* Main Navigation - scrollable area */}
       <nav className="flex-1 min-h-0 overflow-y-auto px-2 py-2">
         {/* Main Items */}
         <ul className="space-y-1">
           {config.mainNavItems.items.map((item) => (
-            <li key={item.name}>
-              <Link
-                to={item.href}
-                title={isCollapsed ? item.name : undefined}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-sm transition-colors",
-                  isCollapsed && "justify-center px-2",
-                  isActive(item.href)
-                    ? "bg-sidebar-accent text-sidebar-foreground"
-                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
-                )}
-              >
-                <item.icon className={cn(
-                  "shrink-0",
-                  isCollapsed ? "h-5 w-5" : "h-4 w-4"
-                )} />
-                {!isCollapsed && <span>{item.name}</span>}
-              </Link>
-            </li>
+            <SidebarNavItem key={item.name} item={item} isCollapsed={isCollapsed} isActive={isActive(item.href)} />
           ))}
         </ul>
 
@@ -176,25 +136,7 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
             )}
             <ul className="space-y-1">
               {config.contentSection.items.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    to={item.href}
-                    title={isCollapsed ? item.name : undefined}
-                    className={cn(
-                      "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-sm transition-colors",
-                      isCollapsed && "justify-center px-2",
-                      isActive(item.href)
-                        ? "bg-sidebar-accent text-sidebar-foreground"
-                        : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
-                    )}
-                  >
-                    <item.icon className={cn(
-                      "shrink-0",
-                      isCollapsed ? "h-5 w-5" : "h-4 w-4"
-                    )} />
-                    {!isCollapsed && <span>{item.name}</span>}
-                  </Link>
-                </li>
+                <SidebarNavItem key={item.name} item={item} isCollapsed={isCollapsed} isActive={isActive(item.href)} />
               ))}
             </ul>
           </div>
@@ -206,42 +148,9 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
         {/* Bottom Navigation Items */}
         <ul className="px-2 pb-2 pt-2 space-y-1">
           {config.bottomNavItems.map((item) => (
-            <li key={item.name}>
-              <Link
-                to={item.href}
-                title={isCollapsed ? item.name : undefined}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-sm transition-colors",
-                  isCollapsed && "justify-center px-2",
-                  isActive(item.href)
-                    ? "bg-sidebar-accent text-sidebar-foreground"
-                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
-                )}
-              >
-                <item.icon className={cn(
-                  "shrink-0",
-                  isCollapsed ? "h-5 w-5" : "h-4 w-4"
-                )} />
-                {!isCollapsed && <span>{item.name}</span>}
-              </Link>
-            </li>
+            <SidebarNavItem key={item.name} item={item} isCollapsed={isCollapsed} isActive={isActive(item.href)} />
           ))}
         </ul>
-
-        {/* Search Button */}
-        <div className="px-2 pb-2">
-          <button
-            title={isCollapsed ? "Search" : undefined}
-            className={cn(
-              "flex items-center gap-3 px-3 py-2 w-full text-sm font-medium rounded-sm transition-colors",
-              isCollapsed && "justify-center px-2",
-              "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
-            )}
-          >
-            <Search className={cn("shrink-0", isCollapsed ? "h-5 w-5" : "h-4 w-4")} />
-            {!isCollapsed && <span>Search</span>}
-          </button>
-        </div>
 
         {/* Collapse Toggle Button */}
         <div className="px-2 pb-2">
@@ -249,7 +158,7 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
             onClick={onToggle}
             title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             className={cn(
-              "flex items-center gap-3 px-3 py-2 w-full text-sm font-medium rounded-sm transition-colors",
+              "flex items-center gap-3 px-3 py-2 w-full text-sm font-medium rounded-sm transition-colors whitespace-nowrap",
               isCollapsed && "justify-center px-2",
               "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
             )}
@@ -304,6 +213,18 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
               side={isCollapsed ? "right" : "top"}
               className="w-56"
             >
+              <DropdownMenuItem asChild>
+                <Link to="/instructor/settings" className="cursor-pointer">
+                  <Settings className="mr-2 h-4 w-4" />
+                  Settings
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/instructor/help" className="cursor-pointer">
+                  <HelpCircle className="mr-2 h-4 w-4" />
+                  Get Help
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
                 <LogOut className="mr-2 h-4 w-4" />
                 Log out

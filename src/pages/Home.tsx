@@ -5,7 +5,6 @@ import { CourseCard } from "@/components/CourseCard"
 import { courseService } from "@/api/course.service"
 import type { Course } from "@/types/course.types"
 import { 
-  Search, 
   Loader2,
   BookOpen,
   ChevronRight,
@@ -70,12 +69,11 @@ export default function Home() {
                 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" className="h-12 px-8 text-base font-semibold shadow-lg hover:shadow-xl transition-shadow">
-                    Explore Courses
-                  </Button>
-                  <Button size="lg" variant="outline" className="h-12 px-8 text-base font-semibold">
-                    For Business
-                  </Button>
+                  <Link to="/courses">
+                    <Button size="lg" className="h-12 px-8 text-base font-semibold shadow-lg hover:shadow-xl transition-shadow">
+                      Explore Courses
+                    </Button>
+                  </Link>
                 </div>
               </div>
               
@@ -127,23 +125,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-      {/* Search Bar Section */}
-      <section className="bg-muted/30 border-b border-border">
-        <div className="container-padding mx-auto max-w-7xl py-8">
-          <div className="max-w-2xl">
-            <div className="flex items-center bg-card border border-border shadow-sm">
-              <Search className="ml-4 h-5 w-5 text-muted-foreground shrink-0" />
-              <input 
-                type="text" 
-                placeholder="Search for anything" 
-                className="flex-1 bg-transparent border-none outline-none px-4 text-base h-12 placeholder:text-muted-foreground"
-              />
-              <Button size="sm" className="m-1 h-10 px-6">Search</Button>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Featured Courses */}
       <section className="container-padding mx-auto max-w-7xl py-12">

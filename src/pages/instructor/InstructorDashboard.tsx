@@ -2,8 +2,9 @@ import { Link } from "react-router-dom"
 import { useUser } from "@/store/auth.store"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { BookOpen, Users, DollarSign, TrendingUp, Plus, Eye, Edit } from "lucide-react"
+import { BookOpen, Users, DollarSign, TrendingUp, Plus } from "lucide-react"
 import { ThemeToggle } from "@/components/layout/ThemeToggle"
+import { SearchBar } from "@/components/ui/SearchBar"
 
 export default function InstructorDashboard() {
   const user = useUser()
@@ -62,6 +63,8 @@ export default function InstructorDashboard() {
               </p>
             </div>
             <div className="flex items-center gap-3">
+              {/* Search Bar */}
+              <SearchBar className="hidden lg:flex w-64" />
               <div className="hidden lg:block">
                 <ThemeToggle />
               </div>
@@ -101,9 +104,9 @@ export default function InstructorDashboard() {
           ))}
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-6">
           {/* My Courses */}
-          <Card className="lg:col-span-2 border-border/40">
+          <Card className="border-border/40">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
@@ -141,64 +144,7 @@ export default function InstructorDashboard() {
               )}
             </CardContent>
           </Card>
-
-          {/* Quick Actions */}
-          <Card className="border-border/40">
-            <CardHeader>
-              <CardTitle>Quick Actions</CardTitle>
-              <CardDescription>
-                Shortcuts to common tasks
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Link to="/instructor/courses/create" className="block">
-                <Button variant="outline" className="w-full justify-start" size="lg">
-                  <Plus className="mr-2 h-4 w-4" />
-                  Create New Course
-                </Button>
-              </Link>
-              <Link to="/instructor/courses" className="block">
-                <Button variant="outline" className="w-full justify-start" size="lg">
-                  <Edit className="mr-2 h-4 w-4" />
-                  Manage Courses
-                </Button>
-              </Link>
-              <Link to="/instructor/students" className="block">
-                <Button variant="outline" className="w-full justify-start" size="lg">
-                  <Users className="mr-2 h-4 w-4" />
-                  View Students
-                </Button>
-              </Link>
-              <Link to="/instructor/analytics" className="block">
-                <Button variant="outline" className="w-full justify-start" size="lg">
-                  <TrendingUp className="mr-2 h-4 w-4" />
-                  Analytics
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
         </div>
-
-        {/* Recent Activity */}
-        <Card className="mt-6 border-border/40">
-          <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>
-              Latest student enrollments and course updates
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="rounded-full bg-muted p-4 mb-4">
-                <Eye className="h-8 w-8 text-muted-foreground" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">No activity yet</h3>
-              <p className="text-muted-foreground max-w-sm">
-                Your recent activity will appear here
-              </p>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   )

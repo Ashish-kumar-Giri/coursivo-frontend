@@ -2,13 +2,9 @@ import type { SidebarConfig } from "@/components/layout/Sidebar"
 import {
   LayoutDashboard,
   BookOpen,
-  Users,
-  BarChart3,
   FileText,
-  MessageSquare,
   Settings,
   HelpCircle,
-  Plus,
   GraduationCap,
   Award,
   TrendingUp,
@@ -22,24 +18,15 @@ export const instructorSidebarConfig: SidebarConfig = {
     items: [
       { name: "Dashboard", href: "/instructor/dashboard", icon: LayoutDashboard },
       { name: "My Courses", href: "/instructor/courses", icon: BookOpen },
-      { name: "Students", href: "/instructor/students", icon: Users },
-      { name: "Analytics", href: "/instructor/analytics", icon: BarChart3 },
     ],
   },
   contentSection: {
     title: "Content",
     items: [
-      { name: "Course Builder", href: "/instructor/courses/create", icon: Plus },
       { name: "Resources", href: "/instructor/resources", icon: FileText },
-      { name: "Messages", href: "/instructor/messages", icon: MessageSquare },
     ],
   },
-  bottomNavItems: [
-    { name: "Settings", href: "/instructor/settings", icon: Settings },
-    { name: "Get Help", href: "/instructor/help", icon: HelpCircle },
-  ],
-  quickCreateLabel: "Quick Create",
-  quickCreateHref: "/instructor/courses/create",
+  bottomNavItems: [],
 }
 
 // Student sidebar configuration

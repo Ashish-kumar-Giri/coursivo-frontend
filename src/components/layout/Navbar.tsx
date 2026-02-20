@@ -4,6 +4,7 @@ import { Menu, X, LayoutDashboard, User, Settings, LogOut, GraduationCap, Users 
 import { toast } from "sonner"
 import { ThemeToggle } from "./ThemeToggle"
 import { Button } from "@/components/ui/button"
+import { SearchBar } from "@/components/ui/SearchBar"
 import { Logo } from "@/components/ui/Logo"
 import {
   DropdownMenu,
@@ -12,25 +13,22 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu"
 import { useAuthStore, useIsAuthenticated, useUser } from "@/store/auth.store"
+import { getInitials } from "@/lib/user-utils"
 
-const navLinks = [
+const publicNavLinks = [
   { name: "Home", href: "/" },
   { name: "Courses", href: "/courses" },
   { name: "Mentors", href: "/mentors" },
 ]
 
-// Get user initials from full name
-function getInitials(name: string): string {
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2)
-}
+const authenticatedNavLinks = [
+  { name: "Home", href: "/" },
+  { name: "Courses", href: "/courses" },
+]
+
+
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -58,7 +56,7 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex md:items-center md:gap-6">
-          {navLinks.map((link) => (
+          {(isAuthenticated ? authenticatedNavLinks : publicNavLinks).map((link) => (
             <Link
               key={link.name}
               to={link.href}
@@ -69,8 +67,21 @@ export function Navbar() {
           ))}
         </div>
 
+        {/* Search Bar */}
+        <SearchBar className="hidden md:flex flex-1 max-w-md mx-4" />
+
         {/* Right Side Actions */}
         <div className="flex items-center gap-4">
+          {/* Dashboard link in navbar for logged-in users */}
+          {isAuthenticated && user && (
+            <Link
+              to={dashboardLink}
+              className="hidden md:inline-flex items-center gap-1.5 text-sm font-normal text-foreground hover:text-primary transition-colors"
+            >
+              <LayoutDashboard className="h-4 w-4" />
+              Dashboard
+            </Link>
+          )}
           <ThemeToggle />
           
           {isAuthenticated && user ? (
@@ -113,26 +124,18 @@ export function Navbar() {
                 <DropdownMenuSeparator />
                 
                 {/* Menu Items */}
-                <DropdownMenuGroup>
-                  <DropdownMenuItem asChild>
-                    <Link to={dashboardLink} className="cursor-pointer py-2.5 px-3 flex items-center">
-                      <LayoutDashboard className="mr-3 h-4 w-4 text-muted-foreground" />
-                      <span>Dashboard</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/profile" className="cursor-pointer py-2.5 px-3 flex items-center">
-                      <User className="mr-3 h-4 w-4 text-muted-foreground" />
-                      <span>My Profile</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/settings" className="cursor-pointer py-2.5 px-3 flex items-center">
-                      <Settings className="mr-3 h-4 w-4 text-muted-foreground" />
-                      <span>Settings</span>
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  <Link to="/profile" className="cursor-pointer py-2.5 px-3 flex items-center">
+                    <User className="mr-3 h-4 w-4 text-muted-foreground" />
+                    <span>My Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/settings" className="cursor-pointer py-2.5 px-3 flex items-center">
+                    <Settings className="mr-3 h-4 w-4 text-muted-foreground" />
+                    <span>Settings</span>
+                  </Link>
+                </DropdownMenuItem>
                 
                 <DropdownMenuSeparator />
                 
@@ -182,7 +185,7 @@ export function Navbar() {
         <div className="border-b bg-background md:hidden">
           <div className="container-padding space-y-4 py-4">
             <div className="flex flex-col space-y-3">
-              {navLinks.map((link) => (
+              {(isAuthenticated ? authenticatedNavLinks : publicNavLinks).map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
@@ -214,14 +217,6 @@ export function Navbar() {
                   </div>
                 </div>
                 
-                <Link 
-                  to={dashboardLink} 
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-muted rounded-md"
-                >
-                  <LayoutDashboard className="h-4 w-4 text-muted-foreground" />
-                  Dashboard
-                </Link>
                 <Link 
                   to="/profile" 
                   onClick={() => setIsMobileMenuOpen(false)}
