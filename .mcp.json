@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["-y", "@heilhead/mcp-shadcn-server"],
+      "disabled": true
+    }
+  }
+}

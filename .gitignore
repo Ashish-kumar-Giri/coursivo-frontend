@@ -25,3 +25,7 @@ dist-ssr
 *.sw?
 
 .env
+
+# Claude Code personal files
+CLAUDE.local.md
+.claude/settings.local.json
