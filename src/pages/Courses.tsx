@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { CourseCard } from "@/components/CourseCard"
 import { courseService } from "@/api/course.service"
 import type { Course } from "@/types/course.types"
-import { Loader2, Search, SlidersHorizontal } from "lucide-react"
+import { Loader2, BookOpen, Compass, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function Courses() {
@@ -26,77 +26,82 @@ export default function Courses() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <section className="bg-background border-b border-border">
-        <div className="container-padding mx-auto max-w-7xl py-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
-            All Courses
+    <div className="min-h-screen bg-background font-sans selection:bg-primary/20 pb-20">
+      
+      {/* 1. Header Section - Premium Gradient */}
+      <section className="relative pt-32 pb-24 overflow-hidden border-b border-border bg-gradient-to-br from-background via-muted/30 to-background">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[100px] opacity-60 pointer-events-none" />
+        
+        <div className="container-padding mx-auto max-w-7xl relative z-10 text-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold tracking-wide uppercase shadow-sm mb-6">
+            <Compass className="h-4 w-4" />
+            Discover
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl font-extrabold text-foreground tracking-tight mb-6">
+            Explore our complete <br className="hidden sm:block" /> catalog of courses
           </h1>
-          <p className="text-base text-muted-foreground">
-            Explore our complete catalog of courses
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            From critical skills to technical topics, Coursivo supports your professional development with access to thousands of courses.
           </p>
         </div>
       </section>
 
-      {/* Search and Filters */}
-      <section className="bg-muted/30 border-b border-border">
-        <div className="container-padding mx-auto max-w-7xl py-6">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 flex items-center bg-card border border-border shadow-sm">
-              <Search className="ml-4 h-5 w-5 text-muted-foreground shrink-0" />
-              <input 
-                type="text" 
-                placeholder="Search courses..." 
-                className="flex-1 bg-transparent border-none outline-none px-4 text-base h-12 placeholder:text-muted-foreground"
-              />
-            </div>
-            <Button variant="outline" className="gap-2">
-              <SlidersHorizontal className="h-4 w-4" />
-              Filters
-            </Button>
-          </div>
-        </div>
-      </section>
+      {/* Search and Filters removed as per request */}
 
-      {/* Courses Grid */}
-      <section className="container-padding mx-auto max-w-7xl py-8">
+      {/* 3. Courses Grid */}
+      <section className="container-padding mx-auto max-w-7xl pt-16">
+        
         {/* Loading State */}
         {isLoading && (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <div className="flex items-center justify-center py-32">
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full"></div>
+              <Loader2 className="h-10 w-10 animate-spin text-primary relative" />
+            </div>
           </div>
         )}
 
         {/* Error State */}
         {error && (
-          <div className="flex items-center justify-center py-20">
-            <div className="text-center">
-              <p className="text-destructive text-lg mb-2">{error}</p>
-              <Button onClick={() => window.location.reload()}>Try Again</Button>
-            </div>
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+             <Shield className="h-12 w-12 text-destructive mb-4 opacity-50" />
+             <p className="text-destructive font-medium text-lg">{error}</p>
+             <Button variant="outline" onClick={() => window.location.reload()} className="mt-6">Try Again</Button>
           </div>
         )}
 
         {/* Courses Grid */}
         {!isLoading && !error && courses.length > 0 && (
-          <>
-            <div className="mb-6 text-sm text-muted-foreground">
-              {courses.length} {courses.length === 1 ? 'course' : 'courses'}
+          <div className="animate-in fade-in duration-1000 delay-300">
+            <div className="flex justify-between items-center mb-8 pb-4 border-b border-border/50">
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">All Courses</h2>
+              <span className="text-sm font-semibold text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
+                {courses.length} {courses.length === 1 ? 'result' : 'results'}
+              </span>
             </div>
-            <div className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+            
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
               {courses.map((course) => (
-                <CourseCard key={course.id} course={course} />
+                <div key={course.id} className="group h-full">
+                   <div className="h-full transform transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-xl">
+                     <CourseCard course={course} />
+                   </div>
+                </div>
               ))}
             </div>
-          </>
+          </div>
         )}
 
         {/* Empty State */}
         {!isLoading && !error && courses.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-20">
-            <p className="text-muted-foreground text-lg font-semibold">No courses available yet</p>
-            <p className="text-sm text-muted-foreground mt-2">Check back soon for new content!</p>
+          <div className="flex flex-col items-center justify-center py-32 text-center bg-muted/10 rounded-2xl border border-dashed border-border/50 animate-in fade-in">
+            <div className="w-20 h-20 bg-background rounded-full shadow-sm flex items-center justify-center mb-6">
+               <BookOpen className="h-10 w-10 text-muted-foreground/40" />
+            </div>
+            <p className="text-foreground text-2xl font-bold tracking-tight mb-2">No courses found</p>
+            <p className="text-muted-foreground max-w-md text-lg">Try adjusting your search or filters to find what you're looking for.</p>
+            <Button variant="outline" className="mt-8 font-bold" onClick={() => window.location.reload()}>Clear Filters</Button>
           </div>
         )}
       </section>

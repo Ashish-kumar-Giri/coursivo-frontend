@@ -194,13 +194,39 @@ export default function SignIn() {
               </div>
             </div>
 
-            {/* Student Login - Coming Soon */}
-            <div className="border rounded-lg p-3 opacity-60">
+            {/* Demo Student Credentials */}
+            <div className="border rounded-lg p-3 space-y-2">
               <div className="flex items-center justify-between gap-2">
-                <div className="flex-1">
-                  <p className="text-xs font-medium text-muted-foreground">Student Login</p>
-                  <p className="text-sm text-muted-foreground">(Coming Soon)</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium text-muted-foreground">Demo Student</p>
+                  <p className="text-sm font-mono truncate">vishalstu@yopmail.com</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-mono">
+                      {showDemoPassword ? "123456" : "••••••"}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setShowDemoPassword(!showDemoPassword)}
+                      className="text-xs text-primary hover:underline"
+                    >
+                      {showDemoPassword ? "Hide" : "Show"}
+                    </button>
+                  </div>
                 </div>
+                <Button 
+                  size="sm"
+                  variant="outline"
+                  className="shrink-0 h-8 px-3"
+                  onClick={() => {
+                    setFormData({
+                      email: "vishalstu@yopmail.com",
+                      password: "123456"
+                    })
+                    toast.info("Demo student credentials applied!")
+                  }}
+                >
+                  Apply
+                </Button>
               </div>
             </div>
           </div>

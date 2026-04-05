@@ -1,13 +1,11 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { cn } from "@/lib/utils"
 import { getInitials } from "@/lib/user-utils"
-import { Logo, LogoIcon } from "@/components/ui/Logo"
+import { Logo } from "@/components/ui/Logo"
 import { useAuthStore, useUser } from "@/store/auth.store"
 import { toast } from "sonner"
 import {
   LogOut,
-  Settings,
-  HelpCircle,
   MoreVertical,
   ChevronsLeft,
   ChevronsRight,
@@ -103,18 +101,26 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
       {/* Logo / Brand */}
       <div className={cn(
         "flex h-16 items-center border-b border-sidebar-border shrink-0",
-        isCollapsed ? "justify-center px-2" : "px-4"
+        isCollapsed ? "justify-center" : "justify-between px-4 gap-2"
       )}>
-        <Link 
-          to="/" 
-          className="flex items-center gap-2 hover:opacity-80 transition-opacity overflow-hidden"
-        >
-          {isCollapsed ? (
-            <LogoIcon size={28} />
-          ) : (
+        {!isCollapsed && (
+          <Link 
+            to="/" 
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity overflow-hidden shrink-0"
+          >
             <Logo size="sm" className="text-sidebar-foreground" />
+          </Link>
+        )}
+        <button
+          onClick={onToggle}
+          title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          className={cn(
+            "flex items-center justify-center rounded-sm text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-colors shrink-0",
+            isCollapsed ? "p-2 w-full h-full" : "p-1.5"
           )}
-        </Link>
+        >
+          {isCollapsed ? <ChevronsRight className="h-5 w-5" /> : <ChevronsLeft className="h-5 w-5" />}
+        </button>
       </div>
 
       {/* Main Navigation - scrollable area */}
@@ -146,37 +152,17 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
       {/* Bottom Section - fixed at bottom */}
       <div className="shrink-0 border-t border-sidebar-border">
         {/* Bottom Navigation Items */}
-        <ul className="px-2 pb-2 pt-2 space-y-1">
-          {config.bottomNavItems.map((item) => (
-            <SidebarNavItem key={item.name} item={item} isCollapsed={isCollapsed} isActive={isActive(item.href)} />
-          ))}
-        </ul>
-
-        {/* Collapse Toggle Button */}
-        <div className="px-2 pb-2">
-          <button
-            onClick={onToggle}
-            title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-            className={cn(
-              "flex items-center gap-3 px-3 py-2 w-full text-sm font-medium rounded-sm transition-colors whitespace-nowrap",
-              isCollapsed && "justify-center px-2",
-              "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
-            )}
-          >
-            {isCollapsed ? (
-              <ChevronsRight className="h-5 w-5 shrink-0" />
-            ) : (
-              <>
-                <ChevronsLeft className="h-4 w-4 shrink-0" />
-                <span>Collapse</span>
-              </>
-            )}
-          </button>
-        </div>
+        {config.bottomNavItems.length > 0 && (
+          <ul className="px-2 pb-2 pt-2 space-y-1 border-b border-sidebar-border">
+            {config.bottomNavItems.map((item) => (
+              <SidebarNavItem key={item.name} item={item} isCollapsed={isCollapsed} isActive={isActive(item.href)} />
+            ))}
+          </ul>
+        )}
 
         {/* User Profile */}
         <div className={cn(
-          "border-t border-sidebar-border p-2",
+          "p-2",
           isCollapsed && "px-1"
         )}>
           <DropdownMenu>
@@ -213,18 +199,6 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
               side={isCollapsed ? "right" : "top"}
               className="w-56"
             >
-              <DropdownMenuItem asChild>
-                <Link to="/instructor/settings" className="cursor-pointer">
-                  <Settings className="mr-2 h-4 w-4" />
-                  Settings
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/instructor/help" className="cursor-pointer">
-                  <HelpCircle className="mr-2 h-4 w-4" />
-                  Get Help
-                </Link>
-              </DropdownMenuItem>
               <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
                 <LogOut className="mr-2 h-4 w-4" />
                 Log out
