@@ -60,28 +60,42 @@ export default function SignIn() {
   }
 
   return (
-    <div className="min-h-screen bg-muted/30 flex">
+    <div className="min-h-screen bg-background flex">
       {/* Left side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-primary p-12 flex-col justify-between">
-        <Link to="/" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-foreground text-primary">
-            <BookOpen className="h-6 w-6" />
+      <div className="hidden lg:flex lg:w-1/2 relative p-12 flex-col justify-between bg-gradient-to-br from-background via-muted/30 to-background border-r border-border overflow-hidden">
+        {/* Glow */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
+        
+        <Link to="/" className="flex items-center gap-3 relative z-10">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 border border-primary/20 text-primary shadow-sm">
+            <BookOpen className="h-5 w-5" />
           </div>
-          <span className="text-2xl font-bold text-primary-foreground font-serif">
+          <span className="text-2xl font-bold text-foreground font-serif tracking-tight">
             Coursivo
           </span>
         </Link>
         
-        <div className="space-y-6">
-          <h1 className="text-4xl font-bold text-primary-foreground leading-tight">
-            Welcome back to your learning journey
+        <div className="space-y-6 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold tracking-wide uppercase shadow-[0_0_15px_rgba(var(--primary),0.1)]">
+             <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+             </span>
+             Welcome Back
+           </div>
+          <h1 className="text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight leading-tight">
+            Unlock your <br />
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              true potential
+            </span>
           </h1>
-          <p className="text-primary-foreground/80 text-lg">
-            Continue where you left off and keep building your skills.
+          <p className="text-muted-foreground text-lg max-w-sm">
+            Continue where you left off and keep building your skills with industry experts.
           </p>
         </div>
         
-        <p className="text-primary-foreground/60 text-sm">
+        <p className="text-muted-foreground/60 text-sm font-medium relative z-10">
           © 2024 Coursivo. All rights reserved.
         </p>
       </div>
