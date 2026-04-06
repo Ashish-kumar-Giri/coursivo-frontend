@@ -1,46 +1,49 @@
-import type { ApiResponse } from "@/types/auth.types"
+import type { ApiResponse } from "@/types/auth.types";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api/"
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api/";
 
 interface HttpOptions extends RequestInit {
-  token?: string
+  token?: string;
 }
 
 class HttpError extends Error {
-  status: number
-  
+  status: number;
+
   constructor(message: string, status: number) {
-    super(message)
-    this.name = "HttpError"
-    this.status = status
+    super(message);
+    this.name = "HttpError";
+    this.status = status;
   }
 }
 
-async function http<T>(endpoint: string, options: HttpOptions = {}): Promise<T> {
-  const { token, ...fetchOptions } = options
+async function http<T>(
+  endpoint: string,
+  options: HttpOptions = {},
+): Promise<T> {
+  const { token, ...fetchOptions } = options;
 
-  const headers = new Headers(options.headers)
-  headers.set("Content-Type", "application/json")
+  const headers = new Headers(options.headers);
+  headers.set("Content-Type", "application/json");
 
   if (token) {
-    headers.set("Authorization", `Bearer ${token}`)
+    headers.set("Authorization", `Bearer ${token}`);
   }
 
   const response = await fetch(`${API_URL}${endpoint}`, {
     ...fetchOptions,
     headers,
-  })
+  });
 
-  const json = (await response.json()) as ApiResponse<T>
+  const json = (await response.json()) as ApiResponse<T>;
 
   if (!response.ok || !json.metaData?.success) {
     throw new HttpError(
       json.metaData?.message || "An error occurred",
-      response.status
-    )
+      response.status,
+    );
   }
 
-  return json.data
+  return json.data;
 }
 
 // HTTP methods
@@ -64,6 +67,6 @@ export const api = {
 
   delete: <T>(endpoint: string, options?: HttpOptions) =>
     http<T>(endpoint, { ...options, method: "DELETE" }),
-}
+};
 
-export { HttpError }
+export { HttpError };

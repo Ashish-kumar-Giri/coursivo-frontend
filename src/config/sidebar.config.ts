@@ -1,9 +1,5 @@
-import type { SidebarConfig } from "@/components/layout/Sidebar"
-import {
-  LayoutDashboard,
-  BookOpen,
-  PlayCircle
-} from "lucide-react"
+import type { SidebarConfig } from "@/components/layout/Sidebar";
+import { LayoutDashboard, BookOpen, PlayCircle } from "lucide-react";
 
 export const studentSidebarConfig: SidebarConfig = {
   mainNavItems: {
@@ -13,14 +9,18 @@ export const studentSidebarConfig: SidebarConfig = {
     ],
   },
   bottomNavItems: [],
-}
+};
 
 export const instructorSidebarConfig: SidebarConfig = {
   mainNavItems: {
     items: [
-      { name: "Dashboard", href: "/instructor/dashboard", icon: LayoutDashboard },
+      {
+        name: "Dashboard",
+        href: "/instructor/dashboard",
+        icon: LayoutDashboard,
+      },
       { name: "My Courses", href: "/instructor/courses", icon: PlayCircle },
     ],
   },
   bottomNavItems: [],
-}
+};

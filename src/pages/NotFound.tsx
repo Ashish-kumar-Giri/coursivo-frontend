@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom"
-import { Button } from "@/components/ui/button"
-import { Home, ArrowLeft } from "lucide-react"
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Home, ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
   return (
@@ -25,9 +25,9 @@ export default function NotFound() {
               Go to Home
             </Button>
           </Link>
-          <Button 
-            variant="outline" 
-            size="lg" 
+          <Button
+            variant="outline"
+            size="lg"
             onClick={() => window.history.back()}
             className="gap-2 w-full sm:w-auto"
           >
@@ -38,20 +38,28 @@ export default function NotFound() {
 
         {/* Helpful Links */}
         <div className="pt-8 border-t border-border">
-          <p className="text-sm text-muted-foreground mb-3">You might be looking for:</p>
+          <p className="text-sm text-muted-foreground mb-3">
+            You might be looking for:
+          </p>
           <div className="flex flex-wrap gap-2 justify-center">
             <Link to="/courses">
-              <Button variant="link" size="sm">Browse Courses</Button>
+              <Button variant="link" size="sm">
+                Browse Courses
+              </Button>
             </Link>
             <Link to="/dashboard">
-              <Button variant="link" size="sm">Dashboard</Button>
+              <Button variant="link" size="sm">
+                Dashboard
+              </Button>
             </Link>
             <Link to="/login">
-              <Button variant="link" size="sm">Sign In</Button>
+              <Button variant="link" size="sm">
+                Sign In
+              </Button>
             </Link>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

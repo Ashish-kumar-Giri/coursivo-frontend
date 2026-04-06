@@ -1,10 +1,13 @@
-import { useState } from "react"
-import { useSortable } from "@dnd-kit/sortable"
-import { useDroppable } from "@dnd-kit/core"
-import { CSS } from "@dnd-kit/utilities"
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { useState } from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { useDroppable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   GripVertical,
   ChevronDown,
@@ -16,26 +19,30 @@ import {
   Plus,
   Video,
   FileText,
-} from "lucide-react"
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { LessonItem } from "./LessonItem"
-import type { Section, Lesson } from "./types"
+} from "@/components/ui/dropdown-menu";
+import { LessonItem } from "./LessonItem";
+import type { Section, Lesson } from "./types";
 
 interface SectionItemProps {
-  section: Section
-  index: number
-  onUpdate: (sectionId: string, updates: Partial<Section>) => void
-  onDelete: (sectionId: string) => void
-  onToggle: (sectionId: string) => void
-  onAddLesson: (sectionId: string, type: "video" | "article" | "quiz") => void
-  onUpdateLesson: (sectionId: string, lessonId: string, updates: Partial<Lesson>) => void
-  onDeleteLesson: (sectionId: string, lessonId: string) => void
-  onToggleLessonPreview: (sectionId: string, lessonId: string) => void
+  section: Section;
+  index: number;
+  onUpdate: (sectionId: string, updates: Partial<Section>) => void;
+  onDelete: (sectionId: string) => void;
+  onToggle: (sectionId: string) => void;
+  onAddLesson: (sectionId: string, type: "video" | "article" | "quiz") => void;
+  onUpdateLesson: (
+    sectionId: string,
+    lessonId: string,
+    updates: Partial<Lesson>,
+  ) => void;
+  onDeleteLesson: (sectionId: string, lessonId: string) => void;
+  onToggleLessonPreview: (sectionId: string, lessonId: string) => void;
 }
 
 export function SectionItem({
@@ -49,8 +56,8 @@ export function SectionItem({
   onDeleteLesson,
   onToggleLessonPreview,
 }: SectionItemProps) {
-  const [isEditing, setIsEditing] = useState(false)
-  const [editTitle, setEditTitle] = useState(section.title)
+  const [isEditing, setIsEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState(section.title);
 
   // Make section itself sortable
   const {
@@ -60,13 +67,13 @@ export function SectionItem({
     transform,
     transition,
     isDragging,
-  } = useSortable({ 
+  } = useSortable({
     id: section.id,
     data: {
       type: "section",
       section,
-    }
-  })
+    },
+  });
 
   // Make the lesson container a droppable area
   const { setNodeRef: setDroppableRef, isOver } = useDroppable({
@@ -74,26 +81,26 @@ export function SectionItem({
     data: {
       type: "section",
       sectionId: section.id,
-    }
-  })
+    },
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-  }
+  };
 
   const handleSave = () => {
-    onUpdate(section.id, { title: editTitle || section.title })
-    setIsEditing(false)
-  }
+    onUpdate(section.id, { title: editTitle || section.title });
+    setIsEditing(false);
+  };
 
   const handleCancel = () => {
-    setEditTitle(section.title)
-    setIsEditing(false)
-  }
+    setEditTitle(section.title);
+    setIsEditing(false);
+  };
 
   return (
-    <div 
+    <div
       ref={setSectionRef}
       style={style}
       className={`border border-border rounded-sm bg-card overflow-hidden ${
@@ -102,14 +109,14 @@ export function SectionItem({
     >
       {/* Section Header */}
       <div className="flex items-center gap-3 p-4 bg-muted/50 border-b border-border">
-        <button 
+        <button
           {...attributes}
           {...listeners}
           className="cursor-grab text-muted-foreground hover:text-foreground touch-none"
         >
           <GripVertical className="h-4 w-4" />
         </button>
-        <button 
+        <button
           onClick={() => onToggle(section.id)}
           className="text-muted-foreground hover:text-foreground"
         >
@@ -119,7 +126,7 @@ export function SectionItem({
             <ChevronRight className="h-4 w-4" />
           )}
         </button>
-        
+
         {isEditing ? (
           <div className="flex-1 flex items-center gap-2">
             <Input
@@ -128,21 +135,21 @@ export function SectionItem({
               className="h-8 text-sm"
               autoFocus
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSave()
-                if (e.key === "Escape") handleCancel()
+                if (e.key === "Enter") handleSave();
+                if (e.key === "Escape") handleCancel();
               }}
             />
-            <Button 
-              size="icon" 
-              variant="ghost" 
+            <Button
+              size="icon"
+              variant="ghost"
               className="h-8 w-8"
               onClick={handleSave}
             >
               <Check className="h-4 w-4" />
             </Button>
-            <Button 
-              size="icon" 
-              variant="ghost" 
+            <Button
+              size="icon"
+              variant="ghost"
               className="h-8 w-8"
               onClick={handleCancel}
             >
@@ -156,10 +163,11 @@ export function SectionItem({
                 Section {index + 1}: {section.title}
               </span>
               <span className="text-xs text-muted-foreground ml-2">
-                ({section.lessons.length} {section.lessons.length === 1 ? "lesson" : "lessons"})
+                ({section.lessons.length}{" "}
+                {section.lessons.length === 1 ? "lesson" : "lessons"})
               </span>
             </div>
-            
+
             {/* Add Lesson Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -169,31 +177,37 @@ export function SectionItem({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => onAddLesson(section.id, "video")}>
+                <DropdownMenuItem
+                  onClick={() => onAddLesson(section.id, "video")}
+                >
                   <Video className="mr-2 h-4 w-4" />
                   Video Lesson
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onAddLesson(section.id, "article")}>
+                <DropdownMenuItem
+                  onClick={() => onAddLesson(section.id, "article")}
+                >
                   <FileText className="mr-2 h-4 w-4" />
                   Article
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onAddLesson(section.id, "quiz")}>
+                <DropdownMenuItem
+                  onClick={() => onAddLesson(section.id, "quiz")}
+                >
                   <FileText className="mr-2 h-4 w-4" />
                   Quiz
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <button 
+            <button
               onClick={() => {
-                setEditTitle(section.title)
-                setIsEditing(true)
+                setEditTitle(section.title);
+                setIsEditing(true);
               }}
               className="text-muted-foreground hover:text-foreground"
             >
               <Edit2 className="h-4 w-4" />
             </button>
-            <button 
+            <button
               onClick={() => onDelete(section.id)}
               className="text-muted-foreground hover:text-destructive"
             >
@@ -205,7 +219,7 @@ export function SectionItem({
 
       {/* Lessons - Droppable area */}
       {section.isExpanded && (
-        <div 
+        <div
           ref={setDroppableRef}
           className={`p-2 min-h-[60px] transition-colors ${
             isOver ? "bg-primary/5" : ""
@@ -218,18 +232,18 @@ export function SectionItem({
               </p>
               {!isOver && (
                 <div className="flex items-center justify-center gap-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     className="gap-2"
                     onClick={() => onAddLesson(section.id, "video")}
                   >
                     <Video className="h-4 w-4" />
                     Add Video
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     className="gap-2"
                     onClick={() => onAddLesson(section.id, "article")}
                   >
@@ -241,7 +255,7 @@ export function SectionItem({
             </div>
           ) : (
             <SortableContext
-              items={section.lessons.map(l => l.id)}
+              items={section.lessons.map((l) => l.id)}
               strategy={verticalListSortingStrategy}
             >
               <div className="space-y-1">
@@ -262,5 +276,5 @@ export function SectionItem({
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -1,25 +1,36 @@
-import { Suspense, lazy } from 'react'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
-import { Toaster } from '@/components/ui/sonner'
-import { Navbar } from './components/layout/Navbar'
-import { ServerAwakener } from './components/startup/ServerAwakener'
-import { Loader2 } from 'lucide-react'
+import { Suspense, lazy } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Toaster } from "@/components/ui/sonner";
+import { Navbar } from "./components/layout/Navbar";
+import { ServerAwakener } from "./components/startup/ServerAwakener";
+import { Loader2 } from "lucide-react";
 
 // Lazy load page components for code splitting
-const Home = lazy(() => import('./pages/Home'))
-const Courses = lazy(() => import('./pages/Courses'))
-const Dashboard = lazy(() => import('./pages/Dashboard'))
-const NotFound = lazy(() => import('./pages/NotFound'))
-const SignIn = lazy(() => import('./pages/auth/SignIn'))
-const SignUp = lazy(() => import('./pages/auth/SignUp'))
+const Home = lazy(() => import("./pages/Home"));
+const Courses = lazy(() => import("./pages/Courses"));
+const CourseDetail = lazy(() => import("./pages/CourseDetail"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const SignIn = lazy(() => import("./pages/auth/SignIn"));
+const SignUp = lazy(() => import("./pages/auth/SignUp"));
 
 // Layouts - lazy loaded
-const InstructorLayout = lazy(() => import('./components/layout/InstructorLayout').then(m => ({ default: m.InstructorLayout })))
-const StudentLayout = lazy(() => import('./components/layout/StudentLayout').then(m => ({ default: m.StudentLayout })))
+const InstructorLayout = lazy(() =>
+  import("./components/layout/InstructorLayout").then((m) => ({
+    default: m.InstructorLayout,
+  })),
+);
+const StudentLayout = lazy(() =>
+  import("./components/layout/StudentLayout").then((m) => ({
+    default: m.StudentLayout,
+  })),
+);
 
 // Instructor pages - lazy loaded
-const InstructorDashboard = lazy(() => import('./pages/instructor/InstructorDashboard'))
-const CourseBuilder = lazy(() => import('./pages/instructor/CourseBuilder'))
+const InstructorDashboard = lazy(
+  () => import("./pages/instructor/InstructorDashboard"),
+);
+const CourseBuilder = lazy(() => import("./pages/instructor/CourseBuilder"));
 
 // Loading fallback component
 function PageLoader() {
@@ -27,32 +38,34 @@ function PageLoader() {
     <div className="flex items-center justify-center min-h-[50vh]">
       <Loader2 className="h-8 w-8 animate-spin text-primary" />
     </div>
-  )
+  );
 }
 
 // Layout wrapper that conditionally shows Navbar
 function AppLayout({ children }: { children: React.ReactNode }) {
-  const location = useLocation()
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup'
-  const isInstructorPage = location.pathname.startsWith('/instructor')
-  const isStudentDashboard = location.pathname === '/dashboard' || 
-    location.pathname.startsWith('/my-courses') ||
-    location.pathname.startsWith('/progress') ||
-    location.pathname.startsWith('/certificates') ||
-    location.pathname.startsWith('/wishlist') ||
-    location.pathname.startsWith('/watch-later') ||
-    location.pathname.startsWith('/settings') ||
-    location.pathname.startsWith('/help')
+  const location = useLocation();
+  const isAuthPage =
+    location.pathname === "/login" || location.pathname === "/signup";
+  const isInstructorPage = location.pathname.startsWith("/instructor");
+  const isStudentDashboard =
+    location.pathname === "/dashboard" ||
+    location.pathname.startsWith("/my-courses") ||
+    location.pathname.startsWith("/progress") ||
+    location.pathname.startsWith("/certificates") ||
+    location.pathname.startsWith("/wishlist") ||
+    location.pathname.startsWith("/watch-later") ||
+    location.pathname.startsWith("/settings") ||
+    location.pathname.startsWith("/help");
 
   // Don't show Navbar for auth pages and dashboard layouts (they have their own sidebar)
-  const showNavbar = !isAuthPage && !isInstructorPage && !isStudentDashboard
+  const showNavbar = !isAuthPage && !isInstructorPage && !isStudentDashboard;
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
       {showNavbar && <Navbar />}
       <main>{children}</main>
     </div>
-  )
+  );
 }
 
 function App() {
@@ -65,13 +78,14 @@ function App() {
               {/* Public routes with Navbar */}
               <Route path="/" element={<Home />} />
               <Route path="/courses" element={<Courses />} />
-              
+              <Route path="/courses/:id" element={<CourseDetail />} />
+
               {/* Student Dashboard Routes - with sidebar layout */}
               <Route element={<StudentLayout />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 {/* Add more student routes here */}
               </Route>
-              
+
               {/* Instructor Routes - with sidebar layout */}
               <Route path="/instructor" element={<InstructorLayout />}>
                 <Route path="dashboard" element={<InstructorDashboard />} />
@@ -82,7 +96,7 @@ function App() {
               {/* Auth routes */}
               <Route path="/login" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
-              
+
               {/* 404 - Catch all unmatched routes */}
               <Route path="*" element={<NotFound />} />
             </Routes>
@@ -91,7 +105,7 @@ function App() {
         <Toaster position="top-right" richColors />
       </BrowserRouter>
     </ServerAwakener>
-  )
+  );
 }
 
-export default App
+export default App;

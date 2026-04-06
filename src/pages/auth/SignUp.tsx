@@ -1,49 +1,49 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { toast } from "sonner"
-import { BookOpen, Loader2, GraduationCap, Users } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { authService } from "@/api/auth.service"
-import { useAuthStore } from "@/store/auth.store"
-import type { UserRole } from "@/types/auth.types"
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { BookOpen, Loader2, GraduationCap, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { authService } from "@/api/auth.service";
+import { useAuthStore } from "@/store/auth.store";
+import type { UserRole } from "@/types/auth.types";
 
 export default function SignUp() {
-  const navigate = useNavigate()
-  const setAuth = useAuthStore((state) => state.setAuth)
-  
-  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate();
+  const setAuth = useAuthStore((state) => state.setAuth);
+
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
     role: "STUDENT" as UserRole,
-  })
+  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleRoleSelect = (role: UserRole) => {
-    setFormData((prev) => ({ ...prev, role }))
-  }
+    setFormData((prev) => ({ ...prev, role }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     // Prevent double submission
-    if (isLoading) return
+    if (isLoading) return;
 
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords do not match")
-      return
+      toast.error("Passwords do not match");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
       const { token } = await authService.register({
@@ -51,25 +51,25 @@ export default function SignUp() {
         password: formData.password,
         fullName: formData.fullName,
         role: formData.role,
-      })
+      });
 
       // Save token to store (also persists to localStorage)
-      setAuth(token)
+      setAuth(token);
 
-      toast.success("Account created successfully!")
+      toast.success("Account created successfully!");
 
       // Redirect based on role
       if (formData.role === "INSTRUCTOR") {
-        navigate("/instructor/dashboard", { replace: true })
+        navigate("/instructor/dashboard", { replace: true });
       } else {
-        navigate("/dashboard", { replace: true })
+        navigate("/dashboard", { replace: true });
       }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Something went wrong")
+      toast.error(err instanceof Error ? err.message : "Something went wrong");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -87,15 +87,15 @@ export default function SignUp() {
             Coursivo
           </span>
         </Link>
-        
+
         <div className="space-y-6 relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold tracking-wide uppercase shadow-[0_0_15px_rgba(var(--primary),0.1)]">
-             <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-             </span>
-             Join the Community
-           </div>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+            </span>
+            Join the Community
+          </div>
           <h1 className="text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight leading-[1.1]">
             Start your learning <br />
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
@@ -103,25 +103,38 @@ export default function SignUp() {
             </span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-sm">
-            Join thousands of learners and instructors building skills and sharing knowledge.
+            Join thousands of learners and instructors building skills and
+            sharing knowledge.
           </p>
-          
+
           <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border mt-8">
             <div>
-              <div className="text-3xl font-extrabold text-foreground">500+</div>
-              <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase mt-1">Courses</div>
+              <div className="text-3xl font-extrabold text-foreground">
+                500+
+              </div>
+              <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase mt-1">
+                Courses
+              </div>
             </div>
             <div>
-              <div className="text-3xl font-extrabold text-foreground">10K+</div>
-              <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase mt-1">Students</div>
+              <div className="text-3xl font-extrabold text-foreground">
+                10K+
+              </div>
+              <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase mt-1">
+                Students
+              </div>
             </div>
             <div>
-              <div className="text-3xl font-extrabold text-foreground">100+</div>
-              <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase mt-1">Instructors</div>
+              <div className="text-3xl font-extrabold text-foreground">
+                100+
+              </div>
+              <div className="text-muted-foreground text-xs font-semibold tracking-wider uppercase mt-1">
+                Instructors
+              </div>
             </div>
           </div>
         </div>
-        
+
         <p className="text-muted-foreground/60 text-sm font-medium relative z-10">
           © 2024 Coursivo. All rights reserved.
         </p>
@@ -143,7 +156,9 @@ export default function SignUp() {
           </div>
 
           <div className="space-y-2 text-center lg:text-left">
-            <h2 className="text-2xl font-bold tracking-tight">Create an account</h2>
+            <h2 className="text-2xl font-bold tracking-tight">
+              Create an account
+            </h2>
             <p className="text-muted-foreground">
               Choose how you want to use Coursivo
             </p>
@@ -164,11 +179,17 @@ export default function SignUp() {
                       : "border-border hover:border-primary/50"
                   }`}
                 >
-                  <GraduationCap className={`h-8 w-8 ${formData.role === "STUDENT" ? "text-primary" : "text-muted-foreground"}`} />
-                  <span className={`font-medium ${formData.role === "STUDENT" ? "text-primary" : "text-foreground"}`}>
+                  <GraduationCap
+                    className={`h-8 w-8 ${formData.role === "STUDENT" ? "text-primary" : "text-muted-foreground"}`}
+                  />
+                  <span
+                    className={`font-medium ${formData.role === "STUDENT" ? "text-primary" : "text-foreground"}`}
+                  >
                     Learn
                   </span>
-                  <span className="text-xs text-muted-foreground">As a Student</span>
+                  <span className="text-xs text-muted-foreground">
+                    As a Student
+                  </span>
                 </button>
                 <button
                   type="button"
@@ -180,11 +201,17 @@ export default function SignUp() {
                       : "border-border hover:border-primary/50"
                   }`}
                 >
-                  <Users className={`h-8 w-8 ${formData.role === "INSTRUCTOR" ? "text-primary" : "text-muted-foreground"}`} />
-                  <span className={`font-medium ${formData.role === "INSTRUCTOR" ? "text-primary" : "text-foreground"}`}>
+                  <Users
+                    className={`h-8 w-8 ${formData.role === "INSTRUCTOR" ? "text-primary" : "text-muted-foreground"}`}
+                  />
+                  <span
+                    className={`font-medium ${formData.role === "INSTRUCTOR" ? "text-primary" : "text-foreground"}`}
+                  >
                     Teach
                   </span>
-                  <span className="text-xs text-muted-foreground">As an Instructor</span>
+                  <span className="text-xs text-muted-foreground">
+                    As an Instructor
+                  </span>
                 </button>
               </div>
             </div>
@@ -257,12 +284,15 @@ export default function SignUp() {
 
           <p className="text-center text-sm text-muted-foreground">
             Already have an account?{" "}
-            <Link to="/login" className="text-primary hover:underline font-medium">
+            <Link
+              to="/login"
+              className="text-primary hover:underline font-medium"
+            >
               Sign in
             </Link>
           </p>
         </div>
       </div>
     </div>
-  )
+  );
 }

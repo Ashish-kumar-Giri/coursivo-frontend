@@ -1,8 +1,8 @@
-import { useState } from "react"
-import { useSortable } from "@dnd-kit/sortable"
-import { CSS } from "@dnd-kit/utilities"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { useState } from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   GripVertical,
   PlayCircle,
@@ -13,34 +13,38 @@ import {
   Trash2,
   Check,
   X,
-} from "lucide-react"
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import type { Lesson } from "./types"
+} from "@/components/ui/dropdown-menu";
+import type { Lesson } from "./types";
 
 interface LessonItemProps {
-  lesson: Lesson
-  index: number
-  sectionId: string
-  onUpdate: (sectionId: string, lessonId: string, updates: Partial<Lesson>) => void
-  onDelete: (sectionId: string, lessonId: string) => void
-  onTogglePreview: (sectionId: string, lessonId: string) => void
+  lesson: Lesson;
+  index: number;
+  sectionId: string;
+  onUpdate: (
+    sectionId: string,
+    lessonId: string,
+    updates: Partial<Lesson>,
+  ) => void;
+  onDelete: (sectionId: string, lessonId: string) => void;
+  onTogglePreview: (sectionId: string, lessonId: string) => void;
 }
 
-export function LessonItem({ 
-  lesson, 
-  index, 
+export function LessonItem({
+  lesson,
+  index,
   sectionId,
-  onUpdate, 
-  onDelete, 
-  onTogglePreview 
+  onUpdate,
+  onDelete,
+  onTogglePreview,
 }: LessonItemProps) {
-  const [isEditing, setIsEditing] = useState(false)
-  const [editTitle, setEditTitle] = useState(lesson.title)
+  const [isEditing, setIsEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState(lesson.title);
 
   const {
     attributes,
@@ -49,58 +53,59 @@ export function LessonItem({
     transform,
     transition,
     isDragging,
-  } = useSortable({ 
+  } = useSortable({
     id: lesson.id,
     data: {
       type: "lesson",
       lesson,
       sectionId,
-    }
-  })
+    },
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : 1,
-  }
+  };
 
   const getLessonIcon = (type: "video" | "article" | "quiz") => {
     switch (type) {
-      case "video": return <PlayCircle className="h-4 w-4" />
-      case "article": return <FileText className="h-4 w-4" />
-      case "quiz": return <FileText className="h-4 w-4" />
+      case "video":
+        return <PlayCircle className="h-4 w-4" />;
+      case "article":
+        return <FileText className="h-4 w-4" />;
+      case "quiz":
+        return <FileText className="h-4 w-4" />;
     }
-  }
+  };
 
   const handleSave = () => {
-    onUpdate(sectionId, lesson.id, { title: editTitle || lesson.title })
-    setIsEditing(false)
-  }
+    onUpdate(sectionId, lesson.id, { title: editTitle || lesson.title });
+    setIsEditing(false);
+  };
 
   const handleCancel = () => {
-    setEditTitle(lesson.title)
-    setIsEditing(false)
-  }
+    setEditTitle(lesson.title);
+    setIsEditing(false);
+  };
 
   return (
-    <div 
+    <div
       ref={setNodeRef}
       style={style}
       className={`flex items-center gap-3 p-3 rounded-sm hover:bg-muted/50 group bg-card ${
         isDragging ? "shadow-lg ring-2 ring-primary/20" : ""
       }`}
     >
-      <button 
+      <button
         {...attributes}
         {...listeners}
         className="cursor-grab text-muted-foreground/50 hover:text-muted-foreground transition-opacity touch-none"
       >
         <GripVertical className="h-4 w-4" />
       </button>
-      <div className="text-muted-foreground">
-        {getLessonIcon(lesson.type)}
-      </div>
-      
+      <div className="text-muted-foreground">{getLessonIcon(lesson.type)}</div>
+
       {isEditing ? (
         <div className="flex-1 flex items-center gap-2">
           <Input
@@ -109,21 +114,21 @@ export function LessonItem({
             className="h-8 text-sm"
             autoFocus
             onKeyDown={(e) => {
-              if (e.key === "Enter") handleSave()
-              if (e.key === "Escape") handleCancel()
+              if (e.key === "Enter") handleSave();
+              if (e.key === "Escape") handleCancel();
             }}
           />
-          <Button 
-            size="icon" 
-            variant="ghost" 
+          <Button
+            size="icon"
+            variant="ghost"
             className="h-8 w-8"
             onClick={handleSave}
           >
             <Check className="h-4 w-4" />
           </Button>
-          <Button 
-            size="icon" 
-            variant="ghost" 
+          <Button
+            size="icon"
+            variant="ghost"
             className="h-8 w-8"
             onClick={handleCancel}
           >
@@ -151,18 +156,22 @@ export function LessonItem({
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => {
-                setEditTitle(lesson.title)
-                setIsEditing(true)
-              }}>
+              <DropdownMenuItem
+                onClick={() => {
+                  setEditTitle(lesson.title);
+                  setIsEditing(true);
+                }}
+              >
                 <Edit2 className="mr-2 h-4 w-4" />
                 Edit Title
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => onTogglePreview(sectionId, lesson.id)}>
+              <DropdownMenuItem
+                onClick={() => onTogglePreview(sectionId, lesson.id)}
+              >
                 <PlayCircle className="mr-2 h-4 w-4" />
                 {lesson.isPreview ? "Remove Preview" : "Make Preview"}
               </DropdownMenuItem>
-              <DropdownMenuItem 
+              <DropdownMenuItem
                 onClick={() => onDelete(sectionId, lesson.id)}
                 className="text-destructive focus:text-destructive"
               >
@@ -174,5 +183,5 @@ export function LessonItem({
         </>
       )}
     </div>
-  )
+  );
 }

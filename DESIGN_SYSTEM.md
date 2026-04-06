@@ -1,85 +1,148 @@
-# Coursivo "Editorial Scholar" Design System
+# Coursivo Design System — Vercel-Inspired
 
-This document outlines the core aesthetic, components, and Tailwind usage patterns for the Coursivo frontend platform. All AI assistants and developers MUST strictly adhere to these patterns when creating, updating, or reviewing UI components.
+This document is the **single source of truth** for all UI decisions in the Coursivo frontend. All AI assistants and developers **MUST** strictly follow these patterns when creating, updating, or reviewing components.
 
-## Core Aesthetic: "Editorial Scholar"
-- **Vibe:** Premium, modern, clean, flat, and highly professional.
-- **Dark Mode Native:** The styles are configured to seamlessly look incredibly sharp using the application's built-in CSS variables (e.g., `bg-background`, `text-foreground`).
-- **Shapes:** Very sharp. All shadcn radii are set to `--radius: 0rem`. Do NOT use rounded components (like `rounded-md` or `rounded-[...]`) for primary UI scaffolding unless it is a specific pill/chip. 
-- **Borders:** Minimal and subtle. Rely on `border-border/50` or `border-border/40`.
+---
 
-## 1. Backgrounds & Gradients
-We use specific gradient treatments rather than flat block colors to achieve the premium feel.
+## Core Aesthetic
 
-**Hero / Layout Backgrounds:**
+- **Style:** Minimalist, monochromatic, developer-focused — inspired by Vercel's design language.
+- **Philosophy:** Borders over shadows. Contrast over decoration. Clarity over complexity.
+- **Shapes:** Rounded corners via `--radius: 0.5rem`. Use `rounded-md` or `rounded-lg` everywhere.
+
+---
+
+## 1. Color Tokens (OKLCH)
+
+All colors are defined as OKLCH lightness values in `src/index.css`.
+
+### Light Mode
+| Token | Value | Purpose |
+|---|---|---|
+| `--background` | `oklch(1.0 0 0)` | Page background (`#ffffff`) |
+| `--foreground` | `oklch(0.15 0 0)` | Body text (near-black) |
+| `--primary` | `oklch(0.15 0 0)` | Black buttons, key actions |
+| `--muted` | `oklch(0.96 0 0)` | Subtle backgrounds |
+| `--muted-foreground` | `oklch(0.55 0 0)` | Secondary/helper text |
+| `--border` | `oklch(0.92 0 0)` | All borders |
+| `--sidebar` | `oklch(0.97 0 0)` | Sidebar background (near-white) |
+| `--sidebar-foreground` | `oklch(0.35 0 0)` | Sidebar inactive text (gray-700) |
+| `--sidebar-accent` | `oklch(0.90 0 0)` | Active/hover pill background |
+| `--sidebar-accent-foreground` | `oklch(0.13 0 0)` | Active nav item text (near-black) |
+| `--sidebar-border` | `oklch(0.90 0 0)` | Sidebar separator |
+
+### Dark Mode
+| Token | Value | Purpose |
+|---|---|---|
+| `--background` | `oklch(0.20 0 0)` | Off-black page bg (`~#1a1a1a`) |
+| `--foreground` | `oklch(0.95 0 0)` | Body text (near-white) |
+| `--primary` | `oklch(0.95 0 0)` | White buttons |
+| `--sidebar` | `oklch(0.20 0 0)` | Sidebar background (same as page) |
+| `--sidebar-foreground` | `oklch(0.95 0 0)` | Sidebar text |
+| `--sidebar-accent` | `oklch(0.25 0 0)` | Active/hover pill |
+
+---
+
+## 2. Typography
+
+**Font Stack:** `'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif`
+Loaded via Google Fonts in `index.html`.
+
+| Element | Size | Weight | Line Height |
+|---|---|---|---|
+| Body | `0.875rem` (14px) | `400` (regular) | `1.6` |
+| Labels / nav items | `13px` | `400` regular / `500` medium active | `20px` |
+| Section headings | `text-lg`–`text-2xl` | `600` (semibold) | `tracking-tight` |
+| Page title (h1) | `text-xl`–`text-2xl` | `600` (semibold) | `tracking-tight` |
+| Stats numbers | `text-3xl` | `600` (semibold) | `tracking-tight` |
+| Small labels | `11px` | `400`–`500` | uppercase, `tracking-widest` |
+
+**Rules:**
+- ❌ **Never** use `font-bold` (700) or `font-extrabold` (800) in UI components.
+- ✅ **Always** use `font-semibold` (600) for headings and `font-medium` (500) for emphasis.
+- ✅ Always pair `font-semibold` headings with `tracking-tight`.
+- ✅ Use `text-muted-foreground` for secondary/helper text.
+
+---
+
+## 3. Sidebar
+
+The sidebar uses dedicated `--sidebar-*` CSS tokens (not generic `bg-background`).
+
 ```tsx
-// Standard split/hero background
-className="bg-gradient-to-br from-background via-muted/30 to-background border-border"
+// Correct sidebar root element
+<aside className="bg-sidebar border-r border-sidebar-border ...">
+
+// Nav item — inactive
+"text-sidebar-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground font-normal text-[13px]"
+
+// Nav item — active
+"bg-sidebar-accent text-sidebar-accent-foreground font-medium text-[13px]"
+
+// Section label
+"text-[11px] font-medium text-sidebar-foreground/50 uppercase tracking-widest"
+
+// User avatar (bottom)
+<div className="h-6 w-6 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 ...">
 ```
 
-**Glassmorphism Glow Orbs:**
-Use blurred radial orbs layered beneath the UI to give depth:
+---
+
+## 4. Cards
+
+Vercel cards rely on crisp borders and hover state transitions — no heavy shadows.
+
 ```tsx
-{/* Primary glow orb */}
-<div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
+// Standard card
+<Card className="border-border/60 shadow-sm hover:border-border hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+
+// Stat card (dashboard)
+<Card className="border-border/40 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
 ```
 
-**Text Gradients:**
-Used exclusively for key header emphasis:
+---
+
+## 5. Buttons
+
 ```tsx
-<span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-  Highlighted Text
+// Primary — black button (light) / white button (dark)
+<Button className="bg-primary text-primary-foreground font-medium">Action</Button>
+
+// Outline — used for secondary actions
+<Button variant="outline" className="font-medium border-border/50 hover:bg-muted/50">...</Button>
+```
+
+---
+
+## 6. Reusable Patterns
+
+**Status / Free badge:**
+```tsx
+<span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-foreground text-background">
+  Free
 </span>
 ```
 
-## 2. Typography
-- **Headings:** High contrast, extremely bold, with tight tracking. 
-  - Standard massive hero title: `text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight leading-tight`
-- **Subheadings/Descriptions:** Subdued, elegant, utilizing muted foregrounds.
-  - Standard description text: `text-muted-foreground text-lg max-w-sm`
-- **Logos/Branding:** Serif fonts are used for brand accents to achieve the "Scholar" look.
-  - Standard logo styling: `font-serif font-bold text-2xl tracking-tight`
-- **Small labels:** Uppercase, tracking-wider, heavy weight.
-  - Standard label: `text-xs font-semibold text-muted-foreground uppercase tracking-wider`
-
-## 3. Cards & Interactions
-We don't use heavy colored borders. Depth is achieved via `hover` transforms and shadows.
-
-**Standard Interactive Card:**
+**Section header with action:**
 ```tsx
-<Card className="border-border/40 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
- ...
-</Card>
-```
-
-**Header Paddings/Structure:**
-Never use massive padding like `py-16` for standard dashboards unless it's a Landing Page Hero. Use `py-6` or `pt-12` to keep interfaces compact and usable.
-
-## 4. Reusable UI Blocks
-
-**"Pulsing Pill" (Radar Notification / Prompt):**
-Used atop important hero units or for status.
-```tsx
-<div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold tracking-wide uppercase shadow-[0_0_15px_rgba(var(--primary),0.1)]">
-  <span className="relative flex h-2 w-2">
-    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-  </span>
-  Your Text Here
+<div className="flex items-center justify-between border-b border-border/40 pb-4 mb-4">
+  <div>
+    <h2 className="text-lg font-semibold tracking-tight">Title</h2>
+    <p className="text-sm text-muted-foreground">Subtitle</p>
+  </div>
+  <Button variant="outline" size="sm" className="font-medium">Action</Button>
 </div>
 ```
 
-**Page Entry Animations:**
-We use `tailwindcss-animate` attributes to smoothly fade the page in on load. Always stagger delays.
-```tsx
-// Outer container
-className="animate-in fade-in slide-in-from-bottom-8 duration-1000"
+---
 
-// Delayed child block
-className="animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-150"
-```
+## 7. Do's and Don'ts
 
-## 5. Do's and Don'ts
-- **DO NOT** use default literal Tailwind colors like `bg-zinc-950` or `text-zinc-500` for major layouts as they break dark/light mode harmonizations. Always use thematic equivalents (`bg-background`, `text-foreground`, `text-muted-foreground`, etc.).
-- **DO NOT** use rounded corners (`rounded-xl`, `rounded-full`) for standard structure elements like Cards or Buttons, as the CSS variable `--radius` is set to `0rem` for the flat aesthetic. The only exception is glowing background orbs or specific pills.
-- **DO** use `lucide-react` for all iconography, and keep icons lightweight (`w-5 h-5` usually, or `w-4 h-4` inside buttons).
+| ✅ DO | ❌ DON'T |
+|---|---|
+| Use `font-semibold` + `tracking-tight` for headings | Use `font-bold` or `font-extrabold` |
+| Use `lucide-react` for all icons | Use emoji or other icon libraries |
+| Use `border-border` everywhere | Use heavy `shadow-lg` or `drop-shadow` |
+| Use `bg-sidebar` for the sidebar element | Use `bg-background` inside sidebar |
+| Use `text-muted-foreground` for descriptions | Use raw gray colors like `text-gray-500` |
+| Use `oklch` values in CSS variables | Hardcode hex colors in components |

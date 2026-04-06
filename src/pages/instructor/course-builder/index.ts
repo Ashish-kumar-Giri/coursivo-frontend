@@ -1,3 +1,3 @@
-export { LessonItem } from "./LessonItem"
-export { SectionItem } from "./SectionItem"
-export * from "./types"
+export { LessonItem } from "./LessonItem";
+export { SectionItem } from "./SectionItem";
+export * from "./types";

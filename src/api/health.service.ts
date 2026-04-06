@@ -1,4 +1,4 @@
-import { api } from "./http"
+import { api } from "./http";
 
 export const healthService = {
   checkHealth: async () => {
@@ -6,6 +6,6 @@ export const healthService = {
     // But api wrapper adds base URL. Let's check BASE URL in http.ts
     // BASE is http://localhost:8080/api/
     // So if we request "health" it becomes "http://localhost:8080/api/health" which is correct
-    return api.get<{ status: string }>("health")
+    return api.get<{ status: string }>("health");
   },
-}
+};
