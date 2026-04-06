@@ -212,5 +212,4 @@
   .section-padding {
     @apply py-8 md:py-16;
   }
-  System.out.println("Hello")
 }
