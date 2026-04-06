@@ -201,7 +201,7 @@
 
   /* Buttons */
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200;
+    @apply bg-primary text-primary-foreground transition-all duration-200 hover:bg-primary/90;
   }
 
   /* Container / Layout */

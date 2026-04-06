@@ -7,21 +7,21 @@ import { Button } from "@/components/ui/button";
 
 function CourseCardSkeleton() {
   return (
-    <div className="flex flex-col rounded-lg overflow-hidden border border-border/60 bg-card animate-pulse">
+    <div className="flex animate-pulse flex-col overflow-hidden rounded-lg border border-border/60 bg-card">
       {/* Thumbnail */}
-      <div className="aspect-video w-full bg-muted shrink-0" />
+      <div className="aspect-video w-full shrink-0 bg-muted" />
       {/* Content */}
-      <div className="flex flex-col gap-2 p-3 flex-1">
+      <div className="flex flex-1 flex-col gap-2 p-3">
         {/* Title */}
-        <div className="h-3.5 bg-muted rounded w-full" />
-        <div className="h-3.5 bg-muted rounded w-4/5" />
+        <div className="h-3.5 w-full rounded bg-muted" />
+        <div className="h-3.5 w-4/5 rounded bg-muted" />
         {/* Instructor */}
-        <div className="h-3 bg-muted rounded w-1/2 mt-0.5" />
+        <div className="mt-0.5 h-3 w-1/2 rounded bg-muted" />
         {/* Rating */}
-        <div className="h-3 bg-muted rounded w-2/3" />
+        <div className="h-3 w-2/3 rounded bg-muted" />
         {/* Price */}
-        <div className="mt-auto pt-1.5 border-t border-border/50">
-          <div className="h-3.5 bg-muted rounded w-1/3" />
+        <div className="mt-auto border-t border-border/50 pt-1.5">
+          <div className="h-3.5 w-1/3 rounded bg-muted" />
         </div>
       </div>
     </div>
@@ -49,22 +49,22 @@ export default function Courses() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background font-sans selection:bg-primary/20 pb-20">
+    <div className="min-h-screen bg-background pb-20 font-sans selection:bg-primary/20">
       {/* 1. Header Section - Premium Gradient */}
-      <section className="relative pt-32 pb-24 overflow-hidden border-b border-border bg-gradient-to-br from-background via-muted/30 to-background">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[100px] opacity-60 pointer-events-none" />
+      <section className="relative overflow-hidden border-b border-border bg-gradient-to-br from-background via-muted/30 to-background pb-24 pt-32">
+        <div className="pointer-events-none absolute left-1/2 top-0 h-[400px] w-[800px] -translate-x-1/2 rounded-full bg-primary/10 opacity-60 blur-[100px]" />
 
-        <div className="container-padding mx-auto max-w-7xl relative z-10 text-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold tracking-wide uppercase shadow-sm mb-6">
+        <div className="container-padding animate-in fade-in slide-in-from-bottom-8 relative z-10 mx-auto max-w-7xl text-center duration-1000">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-sm font-semibold uppercase tracking-wide text-primary shadow-sm">
             <Compass className="h-4 w-4" />
             Discover
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-extrabold text-foreground tracking-tight mb-6">
+          <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-foreground md:text-6xl">
             Explore our complete <br className="hidden sm:block" /> catalog of
             courses
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
             From critical skills to technical topics, Coursivo supports your
             professional development with access to thousands of courses.
           </p>
@@ -87,8 +87,8 @@ export default function Courses() {
         {/* Error State */}
         {error && (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <Shield className="h-12 w-12 text-destructive mb-4 opacity-50" />
-            <p className="text-destructive font-medium text-lg">{error}</p>
+            <Shield className="mb-4 h-12 w-12 text-destructive opacity-50" />
+            <p className="text-lg font-medium text-destructive">{error}</p>
             <Button
               variant="outline"
               onClick={() => window.location.reload()}
@@ -101,12 +101,12 @@ export default function Courses() {
 
         {/* Courses Grid */}
         {!isLoading && !error && courses.length > 0 && (
-          <div className="animate-in fade-in duration-1000 delay-300">
-            <div className="flex justify-between items-center mb-8 pb-4 border-b border-border/50">
+          <div className="animate-in fade-in delay-300 duration-1000">
+            <div className="mb-8 flex items-center justify-between border-b border-border/50 pb-4">
               <h2 className="text-2xl font-bold tracking-tight text-foreground">
                 All Courses
               </h2>
-              <span className="text-sm font-semibold text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
+              <span className="rounded-full bg-muted/50 px-3 py-1 text-sm font-semibold text-muted-foreground">
                 {courses.length} {courses.length === 1 ? "result" : "results"}
               </span>
             </div>
@@ -123,14 +123,14 @@ export default function Courses() {
 
         {/* Empty State */}
         {!isLoading && !error && courses.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-32 text-center bg-muted/10 rounded-2xl border border-dashed border-border/50 animate-in fade-in">
-            <div className="w-20 h-20 bg-background rounded-full shadow-sm flex items-center justify-center mb-6">
+          <div className="animate-in fade-in flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/50 bg-muted/10 py-32 text-center">
+            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-background shadow-sm">
               <BookOpen className="h-10 w-10 text-muted-foreground/40" />
             </div>
-            <p className="text-foreground text-2xl font-bold tracking-tight mb-2">
+            <p className="mb-2 text-2xl font-bold tracking-tight text-foreground">
               No courses found
             </p>
-            <p className="text-muted-foreground max-w-md text-lg">
+            <p className="max-w-md text-lg text-muted-foreground">
               Try adjusting your search or filters to find what you're looking
               for.
             </p>

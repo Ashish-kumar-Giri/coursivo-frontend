@@ -41,69 +41,65 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background font-sans selection:bg-primary/20">
       {/* 1. Hero Section - Premium Split Layout with Glassmorphism Float */}
-      <section className="relative pt-20 pb-28 md:pb-32 overflow-hidden border-b border-border bg-gradient-to-br from-background via-muted/30 to-background">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-primary/10 rounded-full blur-[120px] opacity-50 pointer-events-none" />
+      <section className="relative overflow-hidden border-b border-border bg-gradient-to-br from-background via-muted/30 to-background pb-28 pt-20 md:pb-32">
+        <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[1000px] -translate-x-1/2 rounded-full bg-primary/10 opacity-50 blur-[120px]" />
 
-        <div className="container-padding mx-auto max-w-7xl relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="container-padding relative z-10 mx-auto max-w-7xl">
+          <div className="grid items-center gap-16 lg:grid-cols-2">
             {/* Left Content */}
-            <div className="max-w-2xl space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold tracking-wide uppercase shadow-[0_0_15px_rgba(var(--primary),0.1)]">
+            <div className="animate-in fade-in slide-in-from-bottom-8 max-w-2xl space-y-8 duration-1000">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-sm font-semibold uppercase tracking-wide text-primary shadow-[0_0_15px_rgba(var(--primary),0.1)]">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
                 </span>
                 Transform your career
               </div>
 
-              <h1 className="text-5xl lg:text-7xl font-extrabold text-foreground leading-[1.05] tracking-tight">
+              <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground lg:text-7xl">
                 Unlock your <br />
                 <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                   true potential
                 </span>
               </h1>
 
-              <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl">
+              <p className="max-w-xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
                 Master the world's most in-demand skills with expert-led
                 courses, hands-on projects, and a community of ambitious
                 learners.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <div className="flex flex-col gap-4 pt-4 sm:flex-row">
                 <Link to="/courses">
-                  <Button
-                    size="lg"
-                    className="h-14 px-8 text-base font-bold shadow-xl shadow-primary/20 hover:shadow-primary/30 hover:-translate-y-0.5 transition-all w-full sm:w-auto"
-                  >
+                  <Button className="h-11 w-full px-6 text-sm font-bold shadow-xl shadow-primary/20 transition-all hover:-translate-y-0.5 hover:shadow-primary/30 sm:w-auto">
                     Explore 10,000+ Courses
                   </Button>
                 </Link>
                 <Link to="/signup">
                   <Button
-                    size="lg"
                     variant="outline"
-                    className="h-14 px-8 text-base font-bold bg-background/50 backdrop-blur-sm hover:-translate-y-0.5 transition-all w-full sm:w-auto"
+                    className="h-11 w-full bg-background/50 px-6 text-sm font-bold backdrop-blur-sm transition-all hover:-translate-y-0.5 sm:w-auto"
                   >
                     Join for Free
                   </Button>
                 </Link>
               </div>
 
-              <div className="flex items-center gap-6 pt-6 border-t border-border/50">
+              <div className="flex items-center gap-6 border-t border-border/50 pt-6">
                 <div className="flex -space-x-4">
                   {[1, 2, 3, 4].map((i) => (
                     <div
                       key={i}
-                      className="w-10 h-10 rounded-full border-2 border-background bg-muted flex items-center justify-center shadow-sm overflow-hidden"
+                      className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-2 border-background bg-muted shadow-sm"
                     >
                       <img
                         src={`https://i.pravatar.cc/100?img=${i + 10}`}
                         alt="Student"
-                        className="w-full h-full object-cover"
+                        className="h-full w-full object-cover"
                       />
                     </div>
                   ))}
-                  <div className="w-10 h-10 rounded-full border-2 border-background bg-primary flex items-center justify-center shadow-sm z-10">
+                  <div className="z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-background bg-primary shadow-sm">
                     <span className="text-xs font-bold text-primary-foreground">
                       +50k
                     </span>
@@ -124,24 +120,24 @@ export default function Home() {
             </div>
 
             {/* Right Visual Floating Elements */}
-            <div className="relative hidden lg:block h-[600px] animate-in fade-in slide-in-from-right-8 duration-1000 delay-200">
+            <div className="animate-in fade-in slide-in-from-right-8 relative hidden h-[600px] delay-200 duration-1000 lg:block">
               {/* Main abstract window */}
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[85%] aspect-square bg-gradient-to-br from-primary/20 to-accent/20 rounded border border-border/50 shadow-2xl overflow-hidden backdrop-blur-md">
+              <div className="absolute right-0 top-1/2 aspect-square w-[85%] -translate-y-1/2 overflow-hidden rounded border border-border/50 bg-gradient-to-br from-primary/20 to-accent/20 shadow-2xl backdrop-blur-md">
                 {/* Internal grid mock */}
-                <div className="w-full h-full p-8 relative">
-                  <div className="w-3/4 h-8 bg-background/50 rounded mb-6 backdrop-blur"></div>
-                  <div className="w-full h-32 bg-background/50 rounded mb-4 backdrop-blur"></div>
+                <div className="relative h-full w-full p-8">
+                  <div className="mb-6 h-8 w-3/4 rounded bg-background/50 backdrop-blur"></div>
+                  <div className="mb-4 h-32 w-full rounded bg-background/50 backdrop-blur"></div>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="h-24 bg-background/50 rounded backdrop-blur"></div>
-                    <div className="h-24 bg-background/50 rounded backdrop-blur"></div>
+                    <div className="h-24 rounded bg-background/50 backdrop-blur"></div>
+                    <div className="h-24 rounded bg-background/50 backdrop-blur"></div>
                   </div>
                 </div>
               </div>
 
               {/* Floating Card 1 */}
-              <div className="absolute top-[20%] -left-[10%] bg-card p-4 rounded border border-border shadow-2xl w-64 transform -rotate-3">
+              <div className="absolute -left-[10%] top-[20%] w-64 -rotate-3 transform rounded border border-border bg-card p-4 shadow-2xl">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded flex items-center justify-center text-primary">
+                  <div className="flex h-12 w-12 items-center justify-center rounded bg-primary/10 text-primary">
                     <Award className="h-6 w-6" />
                   </div>
                   <div>
@@ -156,11 +152,11 @@ export default function Home() {
               </div>
 
               {/* Floating Card 2 */}
-              <div className="absolute bottom-[25%] -left-[5%] bg-card p-4 rounded border border-border shadow-2xl w-72 transform rotate-2 hover:rotate-0 transition-all duration-300">
+              <div className="absolute -left-[5%] bottom-[25%] w-72 rotate-2 transform rounded border border-border bg-card p-4 shadow-2xl transition-all duration-300 hover:rotate-0">
                 <div className="flex items-center gap-4">
-                  <div className="relative w-12 h-12">
-                    <div className="absolute inset-0 bg-orange-400/20 rounded animate-ping"></div>
-                    <div className="relative w-full h-full bg-orange-400/10 rounded flex items-center justify-center text-orange-500">
+                  <div className="relative h-12 w-12">
+                    <div className="absolute inset-0 animate-ping rounded bg-orange-400/20"></div>
+                    <div className="relative flex h-full w-full items-center justify-center rounded bg-orange-400/10 text-orange-500">
                       <PlayCircle className="h-6 w-6" />
                     </div>
                   </div>
@@ -180,18 +176,18 @@ export default function Home() {
       </section>
 
       {/* 2. Key Value Props */}
-      <section className="py-20 border-b border-border bg-background">
+      <section className="border-b border-border bg-background py-20">
         <div className="container-padding mx-auto max-w-7xl">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-sm font-bold text-primary tracking-widest uppercase mb-3">
+          <div className="mx-auto mb-16 max-w-2xl text-center">
+            <h2 className="mb-3 text-sm font-bold uppercase tracking-widest text-primary">
               Why Coursivo?
             </h2>
-            <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+            <h3 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
               Built for modern learners
             </h3>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid gap-8 md:grid-cols-3">
             {[
               {
                 icon: Target,
@@ -211,15 +207,15 @@ export default function Home() {
             ].map((prop, i) => (
               <div
                 key={i}
-                className="group p-8 rounded border border-border/50 bg-muted/20 hover:bg-muted/50 transition-colors"
+                className="group rounded border border-border/50 bg-muted/20 p-8 transition-colors hover:bg-muted/50"
               >
-                <div className="w-12 h-12 bg-primary/10 rounded flex items-center justify-center text-primary mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded bg-primary/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground">
                   <prop.icon className="h-6 w-6" />
                 </div>
-                <h4 className="text-xl font-bold text-foreground mb-3">
+                <h4 className="mb-3 text-xl font-bold text-foreground">
                   {prop.title}
                 </h4>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="leading-relaxed text-muted-foreground">
                   {prop.desc}
                 </p>
               </div>
@@ -230,19 +226,19 @@ export default function Home() {
 
       {/* 3. Featured Courses */}
       <section className="container-padding mx-auto max-w-7xl py-24">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 tracking-tight">
+            <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
               Top courses right now
             </h2>
             <p className="text-lg text-muted-foreground">
               The most popular choices from our global community of learners.
             </p>
           </div>
-          <Link to="/courses" className="hidden md:inline-flex shrink-0">
-            <Button variant="outline" className="font-semibold group">
+          <Link to="/courses" className="hidden shrink-0 md:inline-flex">
+            <Button variant="outline" className="group font-semibold">
               View all courses
-              <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>
         </div>
@@ -251,8 +247,8 @@ export default function Home() {
         {isLoading && (
           <div className="flex items-center justify-center py-32">
             <div className="relative">
-              <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full"></div>
-              <Loader2 className="h-10 w-10 animate-spin text-primary relative" />
+              <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl"></div>
+              <Loader2 className="relative h-10 w-10 animate-spin text-primary" />
             </div>
           </div>
         )}
@@ -260,8 +256,8 @@ export default function Home() {
         {/* Error State */}
         {error && (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <Shield className="h-12 w-12 text-destructive mb-4 opacity-50" />
-            <p className="text-destructive font-medium">{error}</p>
+            <Shield className="mb-4 h-12 w-12 text-destructive opacity-50" />
+            <p className="font-medium text-destructive">{error}</p>
             <Button
               variant="outline"
               onClick={() => window.location.reload()}
@@ -285,12 +281,12 @@ export default function Home() {
 
         {/* Empty State */}
         {!isLoading && !error && courses.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-32 text-center bg-muted/10 rounded border border-dashed border-border border-border/50">
-            <BookOpen className="h-16 w-16 text-muted-foreground/30 mb-6" />
-            <p className="text-foreground text-xl font-bold mb-2">
+          <div className="flex flex-col items-center justify-center rounded border border-dashed border-border border-border/50 bg-muted/10 py-32 text-center">
+            <BookOpen className="mb-6 h-16 w-16 text-muted-foreground/30" />
+            <p className="mb-2 text-xl font-bold text-foreground">
               No courses published yet
             </p>
-            <p className="text-muted-foreground max-w-sm">
+            <p className="max-w-sm text-muted-foreground">
               We're working hard to bring you the best content. Check back very
               soon!
             </p>
@@ -303,52 +299,52 @@ export default function Home() {
             <Button
               variant="outline"
               size="lg"
-              className="w-full font-semibold group"
+              className="group w-full font-semibold"
             >
               Explore all courses
-              <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>
         </div>
       </section>
 
       {/* 4. Instructor CTA */}
-      <section className="relative overflow-hidden bg-zinc-950 text-zinc-50 py-24 isolate">
+      <section className="relative isolate overflow-hidden bg-zinc-950 py-24 text-zinc-50">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(255,255,255,0.08),transparent_40%)]" />
 
-        <div className="container-padding mx-auto max-w-7xl relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="container-padding relative z-10 mx-auto max-w-7xl">
+          <div className="grid items-center gap-16 lg:grid-cols-2">
             <div className="order-2 lg:order-1">
-              <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-black/90 flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-300 group">
-                    <PlayCircle className="h-10 w-10 text-white translate-x-0.5 group-hover:text-primary transition-colors" />
+              <div className="relative aspect-video overflow-hidden rounded-xl shadow-2xl">
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/40 to-black/90">
+                  <div className="group flex h-20 w-20 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur transition-transform duration-300 hover:scale-110">
+                    <PlayCircle className="h-10 w-10 translate-x-0.5 text-white transition-colors group-hover:text-primary" />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="order-1 lg:order-2 space-y-6">
-              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-6">
+            <div className="order-1 space-y-6 lg:order-2">
+              <h2 className="mb-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl">
                 Become an instructor
               </h2>
-              <p className="text-xl text-white/70 leading-relaxed mb-8">
+              <p className="mb-8 text-xl leading-relaxed text-white/70">
                 Share your knowledge with millions of students across the globe.
                 We provide the tools, you provide the expertise. Start teaching
                 today and earn while you empower others.
               </p>
 
-              <ul className="space-y-5 mb-10 text-white/80">
+              <ul className="mb-10 space-y-5 text-white/80">
                 {[
                   "Publish your course your way",
                   "Build your personal brand",
                   "Earn money from every enrollment",
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-4">
-                    <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary shrink-0">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
                       <CheckCircle2 className="h-5 w-5" />
                     </div>
-                    <span className="font-medium text-lg">{item}</span>
+                    <span className="text-lg font-medium">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -356,7 +352,7 @@ export default function Home() {
               <Link to="/signup">
                 <Button
                   size="lg"
-                  className="h-14 px-8 text-lg font-bold bg-primary hover:bg-primary/90 text-primary-foreground border-0 hover:scale-105 transition-transform duration-300 shadow-xl shadow-primary/20"
+                  className="h-14 border-0 bg-primary px-8 text-lg font-bold text-primary-foreground shadow-xl shadow-primary/20 transition-transform duration-300 hover:scale-105 hover:bg-primary/90"
                 >
                   Start teaching today
                 </Button>

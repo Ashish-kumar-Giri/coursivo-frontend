@@ -4,8 +4,8 @@ import { Home, ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="text-center space-y-6 max-w-md">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
+      <div className="max-w-md space-y-6 text-center">
         {/* 404 Text */}
         <div className="space-y-2">
           <h1 className="text-9xl font-bold text-primary">404</h1>
@@ -13,14 +13,14 @@ export default function NotFound() {
         </div>
 
         {/* Description */}
-        <p className="text-muted-foreground text-lg">
+        <p className="text-lg text-muted-foreground">
           The page you're looking for doesn't exist or has been moved.
         </p>
 
         {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
+        <div className="flex flex-col justify-center gap-3 pt-4 sm:flex-row">
           <Link to="/">
-            <Button size="lg" className="gap-2 w-full sm:w-auto">
+            <Button size="lg" className="w-full gap-2 sm:w-auto">
               <Home className="h-4 w-4" />
               Go to Home
             </Button>
@@ -29,7 +29,7 @@ export default function NotFound() {
             variant="outline"
             size="lg"
             onClick={() => window.history.back()}
-            className="gap-2 w-full sm:w-auto"
+            className="w-full gap-2 sm:w-auto"
           >
             <ArrowLeft className="h-4 w-4" />
             Go Back
@@ -37,11 +37,11 @@ export default function NotFound() {
         </div>
 
         {/* Helpful Links */}
-        <div className="pt-8 border-t border-border">
-          <p className="text-sm text-muted-foreground mb-3">
+        <div className="border-t border-border pt-8">
+          <p className="mb-3 text-sm text-muted-foreground">
             You might be looking for:
           </p>
-          <div className="flex flex-wrap gap-2 justify-center">
+          <div className="flex flex-wrap justify-center gap-2">
             <Link to="/courses">
               <Button variant="link" size="sm">
                 Browse Courses

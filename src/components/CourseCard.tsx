@@ -50,14 +50,14 @@ export function CourseCard({ course, className }: CourseCardProps) {
     <Link
       to={`/courses/${course.id}`}
       className={cn(
-        "group block cursor-pointer flex flex-col rounded-xl overflow-hidden self-stretch h-full",
+        "group block flex h-full cursor-pointer flex-col self-stretch overflow-hidden rounded-xl",
         "border border-border/60 bg-card",
-        "transition-all duration-300 hover:border-border hover:shadow-xl hover:-translate-y-1 active:translate-y-0",
+        "transition-all duration-300 hover:-translate-y-1 hover:border-border hover:shadow-xl active:translate-y-0",
         className,
       )}
     >
       {/* Thumbnail */}
-      <div className="relative aspect-video w-full overflow-hidden bg-muted shrink-0">
+      <div className="relative aspect-video w-full shrink-0 overflow-hidden bg-muted">
         <img
           src={thumbnailUrl}
           alt={title}
@@ -69,37 +69,37 @@ export function CourseCard({ course, className }: CourseCardProps) {
         />
         {/* Free badge */}
         {(isFree || price === 0) && (
-          <span className="absolute top-2 left-2 text-[11px] font-medium px-2 py-0.5 rounded-full bg-foreground text-background leading-5">
+          <span className="absolute left-2 top-2 rounded-full bg-foreground px-2 py-0.5 text-[11px] font-medium leading-5 text-background">
             Free
           </span>
         )}
       </div>
 
       {/* Content */}
-      <div className="flex flex-col gap-2 p-4 flex-1">
+      <div className="flex flex-1 flex-col gap-2 p-4">
         {/* Title */}
-        <h3 className="font-semibold text-[15px] leading-snug text-foreground line-clamp-2 tracking-tight">
+        <h3 className="line-clamp-2 text-[15px] font-semibold leading-snug tracking-tight text-foreground">
           {title}
         </h3>
 
         {/* Instructor */}
-        <p className="text-[13px] text-muted-foreground/80 leading-none">
+        <p className="text-[13px] leading-none text-muted-foreground/80">
           {instructor.fullName}
         </p>
 
         {/* Rating */}
-        <div className="flex items-center gap-1.5 mt-1">
-          <span className="text-[13px] font-semibold text-amber-500 leading-none">
+        <div className="mt-1 flex items-center gap-1.5">
+          <span className="text-[13px] font-semibold leading-none text-amber-500">
             4.5
           </span>
           <RatingStars rating={4.5} />
-          <span className="text-[11px] text-muted-foreground/60 leading-none font-medium">
+          <span className="text-[11px] font-medium leading-none text-muted-foreground/60">
             (1,234 reviews)
           </span>
         </div>
 
         {/* Price */}
-        <div className="mt-auto pt-3 border-t border-border/40">
+        <div className="mt-auto border-t border-border/40 pt-3">
           <span
             className={cn(
               "text-[14px] font-bold tracking-tight",

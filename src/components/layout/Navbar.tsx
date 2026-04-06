@@ -61,15 +61,15 @@ export function Navbar() {
     <nav
       className={`fixed top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border shadow-sm py-2"
-          : "bg-transparent border-transparent py-4"
+          ? "border-b border-border bg-background/80 py-2 shadow-sm backdrop-blur-xl"
+          : "border-transparent bg-transparent py-4"
       }`}
     >
-      <div className="container-padding mx-auto flex items-center justify-between max-w-7xl">
+      <div className="container-padding mx-auto flex max-w-7xl items-center justify-between">
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 transition-opacity hover:opacity-80"
         >
           <Logo size="md" className="text-foreground" />
         </Link>
@@ -81,10 +81,10 @@ export function Navbar() {
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors relative group"
+                className="group relative text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary transition-all group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-primary transition-all group-hover:w-full"></span>
               </Link>
             ),
           )}
@@ -92,7 +92,7 @@ export function Navbar() {
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-4">
-          <div className="hidden md:flex items-center">
+          <div className="hidden items-center md:flex">
             <ThemeToggle />
           </div>
 
@@ -100,31 +100,31 @@ export function Navbar() {
             // Logged in - Show user avatar
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground font-bold text-sm hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 shadow-lg hover:shadow-primary/20">
+                <button className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-sm font-bold text-primary-foreground shadow-lg transition-all hover:scale-105 hover:shadow-primary/20 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                   {getInitials(user.fullName)}
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 align="end"
-                className="w-72 p-2 shadow-2xl border-border/50 rounded-xl"
+                className="w-72 rounded-xl border-border/50 p-2 shadow-2xl"
               >
-                <DropdownMenuLabel className="font-normal p-0 mb-2">
-                  <div className="flex items-center gap-4 p-3 rounded-lg bg-muted/40">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground font-bold text-lg shadow-sm">
+                <DropdownMenuLabel className="mb-2 p-0 font-normal">
+                  <div className="flex items-center gap-4 rounded-lg bg-muted/40 p-3">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 text-lg font-bold text-primary-foreground shadow-sm">
                       {getInitials(user.fullName)}
                     </div>
                     <div className="flex flex-col gap-0.5 overflow-hidden">
-                      <p className="text-sm font-bold text-foreground truncate">
+                      <p className="truncate text-sm font-bold text-foreground">
                         {user.fullName}
                       </p>
-                      <p className="text-xs text-muted-foreground truncate">
+                      <p className="truncate text-xs text-muted-foreground">
                         {user.email}
                       </p>
                       <span
-                        className={`mt-1 inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full w-fit ${
+                        className={`mt-1 inline-flex w-fit items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
                           user.role === "INSTRUCTOR"
-                            ? "bg-primary/10 text-primary border border-primary/20"
-                            : "bg-accent/20 text-accent-foreground border border-accent/20"
+                            ? "border border-primary/20 bg-primary/10 text-primary"
+                            : "border border-accent/20 bg-accent/20 text-accent-foreground"
                         }`}
                       >
                         {user.role === "INSTRUCTOR" ? (
@@ -147,7 +147,7 @@ export function Navbar() {
                   <DropdownMenuItem asChild>
                     <Link
                       to={dashboardLink}
-                      className="cursor-pointer py-2.5 px-3 flex items-center rounded-md font-medium text-muted-foreground focus:bg-muted focus:text-foreground"
+                      className="flex cursor-pointer items-center rounded-md px-3 py-2.5 font-medium text-muted-foreground focus:bg-muted focus:text-foreground"
                     >
                       <LayoutDashboard className="mr-3 h-4 w-4" />
                       <span>Dashboard</span>
@@ -160,7 +160,7 @@ export function Navbar() {
                 <div className="p-1">
                   <DropdownMenuItem
                     onClick={handleLogout}
-                    className="cursor-pointer py-2.5 px-3 rounded-md text-destructive focus:text-destructive focus:bg-destructive/10 font-bold"
+                    className="cursor-pointer rounded-md px-3 py-2.5 font-bold text-destructive focus:bg-destructive/10 focus:text-destructive"
                   >
                     <LogOut className="mr-3 h-4 w-4" />
                     <span>Log out</span>
@@ -174,13 +174,13 @@ export function Navbar() {
               <Link to="/login">
                 <Button
                   variant="ghost"
-                  className="font-bold hover:bg-muted/50 rounded-full px-5"
+                  className="rounded-full px-5 font-bold hover:bg-muted/50"
                 >
                   Log in
                 </Button>
               </Link>
               <Link to="/signup">
-                <Button className="font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-0.5 transition-all rounded-full px-6">
+                <Button className="rounded-full px-6 font-bold shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 hover:shadow-primary/40">
                   Get Started
                 </Button>
               </Link>
@@ -191,7 +191,7 @@ export function Navbar() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden bg-muted/30"
+            className="bg-muted/30 md:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
@@ -205,10 +205,10 @@ export function Navbar() {
 
       {/* Mobile Menu Overflow */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-background/95 backdrop-blur-xl border-b border-border shadow-2xl animate-in fade-in slide-in-from-top-2">
-          <div className="container-padding py-6 space-y-6">
-            <div className="flex justify-between items-center border-b border-border/50 pb-4">
-              <span className="text-sm font-bold text-muted-foreground uppercase tracking-widest">
+        <div className="animate-in fade-in slide-in-from-top-2 absolute left-0 top-full w-full border-b border-border bg-background/95 shadow-2xl backdrop-blur-xl md:hidden">
+          <div className="container-padding space-y-6 py-6">
+            <div className="flex items-center justify-between border-b border-border/50 pb-4">
+              <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
                 Navigation
               </span>
               <ThemeToggle />
@@ -222,7 +222,7 @@ export function Navbar() {
                     <Link
                       key={link.name}
                       to={link.href}
-                      className="text-lg font-bold text-foreground hover:text-primary transition-colors"
+                      className="text-lg font-bold text-foreground transition-colors hover:text-primary"
                     >
                       {link.name}
                     </Link>
@@ -232,23 +232,23 @@ export function Navbar() {
             )}
 
             {isAuthenticated && user ? (
-              <div className="bg-muted/30 rounded-xl p-4 border border-border/50 shadow-inner">
-                <div className="flex items-center gap-4 mb-4 pb-4 border-b border-border/50">
-                  <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground flex items-center justify-center font-bold text-xl shadow-md">
+              <div className="rounded-xl border border-border/50 bg-muted/30 p-4 shadow-inner">
+                <div className="mb-4 flex items-center gap-4 border-b border-border/50 pb-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-xl font-bold text-primary-foreground shadow-md">
                     {getInitials(user.fullName)}
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg leading-none">
+                    <h3 className="text-lg font-bold leading-none">
                       {user.fullName}
                     </h3>
-                    <p className="text-sm text-muted-foreground mb-1 mt-1">
+                    <p className="mb-1 mt-1 text-sm text-muted-foreground">
                       {user.email}
                     </p>
                     <span
-                      className={`inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
                         user.role === "INSTRUCTOR"
-                          ? "bg-primary/10 text-primary border border-primary/20"
-                          : "bg-accent/20 text-accent-foreground border border-accent/20"
+                          ? "border border-primary/20 bg-primary/10 text-primary"
+                          : "border border-accent/20 bg-accent/20 text-accent-foreground"
                       }`}
                     >
                       {user.role === "INSTRUCTOR" ? "Instructor" : "Student"}
@@ -259,14 +259,14 @@ export function Navbar() {
                 <div className="space-y-2">
                   <Link
                     to={dashboardLink}
-                    className="flex items-center gap-3 px-3 py-2 text-sm font-semibold rounded-lg hover:bg-background transition-colors"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold transition-colors hover:bg-background"
                   >
                     <LayoutDashboard className="h-4 w-4 text-muted-foreground" />
                     Dashboard
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-3 px-3 py-2 mt-2 text-sm font-bold text-destructive rounded-lg hover:bg-destructive/10 transition-colors"
+                    className="mt-2 flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-bold text-destructive transition-colors hover:bg-destructive/10"
                   >
                     <LogOut className="h-4 w-4" />
                     Log out
@@ -278,7 +278,7 @@ export function Navbar() {
                 <Link to="/login">
                   <Button
                     variant="outline"
-                    className="w-full h-12 text-base font-bold rounded-xl"
+                    className="h-12 w-full rounded-xl text-base font-bold"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Log in
@@ -286,7 +286,7 @@ export function Navbar() {
                 </Link>
                 <Link to="/signup">
                   <Button
-                    className="w-full h-12 text-base font-bold shadow-lg shadow-primary/20 rounded-xl"
+                    className="h-12 w-full rounded-xl text-base font-bold shadow-lg shadow-primary/20"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Get Started

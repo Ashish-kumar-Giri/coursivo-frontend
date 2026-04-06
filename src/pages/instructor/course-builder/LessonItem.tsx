@@ -93,21 +93,21 @@ export function LessonItem({
     <div
       ref={setNodeRef}
       style={style}
-      className={`flex items-center gap-3 p-3 rounded-sm hover:bg-muted/50 group bg-card ${
+      className={`group flex items-center gap-3 rounded-sm bg-card p-3 hover:bg-muted/50 ${
         isDragging ? "shadow-lg ring-2 ring-primary/20" : ""
       }`}
     >
       <button
         {...attributes}
         {...listeners}
-        className="cursor-grab text-muted-foreground/50 hover:text-muted-foreground transition-opacity touch-none"
+        className="cursor-grab touch-none text-muted-foreground/50 transition-opacity hover:text-muted-foreground"
       >
         <GripVertical className="h-4 w-4" />
       </button>
       <div className="text-muted-foreground">{getLessonIcon(lesson.type)}</div>
 
       {isEditing ? (
-        <div className="flex-1 flex items-center gap-2">
+        <div className="flex flex-1 items-center gap-2">
           <Input
             value={editTitle}
             onChange={(e) => setEditTitle(e.target.value)}
@@ -141,17 +141,17 @@ export function LessonItem({
             {index + 1}. {lesson.title}
           </span>
           {lesson.isPreview && (
-            <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">
+            <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
               Preview
             </span>
           )}
-          <span className="text-xs text-muted-foreground flex items-center gap-1">
+          <span className="flex items-center gap-1 text-xs text-muted-foreground">
             <Clock className="h-3 w-3" />
             {lesson.duration}
           </span>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+              <button className="text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-hover:opacity-100">
                 <MoreVertical className="h-4 w-4" />
               </button>
             </DropdownMenuTrigger>

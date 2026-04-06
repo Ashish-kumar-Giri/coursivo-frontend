@@ -103,16 +103,16 @@ export function SectionItem({
     <div
       ref={setSectionRef}
       style={style}
-      className={`border border-border rounded-sm bg-card overflow-hidden ${
+      className={`overflow-hidden rounded-sm border border-border bg-card ${
         isDragging ? "opacity-50" : ""
       }`}
     >
       {/* Section Header */}
-      <div className="flex items-center gap-3 p-4 bg-muted/50 border-b border-border">
+      <div className="flex items-center gap-3 border-b border-border bg-muted/50 p-4">
         <button
           {...attributes}
           {...listeners}
-          className="cursor-grab text-muted-foreground hover:text-foreground touch-none"
+          className="cursor-grab touch-none text-muted-foreground hover:text-foreground"
         >
           <GripVertical className="h-4 w-4" />
         </button>
@@ -128,7 +128,7 @@ export function SectionItem({
         </button>
 
         {isEditing ? (
-          <div className="flex-1 flex items-center gap-2">
+          <div className="flex flex-1 items-center gap-2">
             <Input
               value={editTitle}
               onChange={(e) => setEditTitle(e.target.value)}
@@ -162,7 +162,7 @@ export function SectionItem({
               <span className="text-sm font-semibold">
                 Section {index + 1}: {section.title}
               </span>
-              <span className="text-xs text-muted-foreground ml-2">
+              <span className="ml-2 text-xs text-muted-foreground">
                 ({section.lessons.length}{" "}
                 {section.lessons.length === 1 ? "lesson" : "lessons"})
               </span>
@@ -221,13 +221,13 @@ export function SectionItem({
       {section.isExpanded && (
         <div
           ref={setDroppableRef}
-          className={`p-2 min-h-[60px] transition-colors ${
+          className={`min-h-[60px] p-2 transition-colors ${
             isOver ? "bg-primary/5" : ""
           }`}
         >
           {section.lessons.length === 0 ? (
-            <div className="text-center py-6">
-              <p className="text-sm text-muted-foreground mb-3">
+            <div className="py-6 text-center">
+              <p className="mb-3 text-sm text-muted-foreground">
                 {isOver ? "Drop lesson here" : "No lessons in this section"}
               </p>
               {!isOver && (

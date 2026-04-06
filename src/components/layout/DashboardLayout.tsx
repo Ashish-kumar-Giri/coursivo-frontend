@@ -29,9 +29,9 @@ export function DashboardLayout({ config, storageKey }: DashboardLayoutProps) {
   };
 
   return (
-    <div className="flex h-screen bg-background overflow-hidden">
+    <div className="flex h-screen overflow-hidden bg-background">
       {/* Desktop Sidebar */}
-      <div className="hidden lg:flex shrink-0">
+      <div className="hidden shrink-0 lg:flex">
         <Sidebar
           config={config}
           isCollapsed={isCollapsed}
@@ -59,9 +59,9 @@ export function DashboardLayout({ config, storageKey }: DashboardLayoutProps) {
       )}
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex flex-1 flex-col overflow-hidden">
         {/* Top Bar (Mobile) */}
-        <header className="flex h-14 items-center justify-between border-b border-border bg-background px-4 lg:hidden shrink-0">
+        <header className="flex h-14 shrink-0 items-center justify-between border-b border-border bg-background px-4 lg:hidden">
           <Button
             variant="ghost"
             size="icon"
@@ -70,7 +70,7 @@ export function DashboardLayout({ config, storageKey }: DashboardLayoutProps) {
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle sidebar</span>
           </Button>
-          <Link to="/" className="hover:opacity-80 transition-opacity">
+          <Link to="/" className="transition-opacity hover:opacity-80">
             <Logo size="sm" className="text-foreground" />
           </Link>
           <ThemeToggle />

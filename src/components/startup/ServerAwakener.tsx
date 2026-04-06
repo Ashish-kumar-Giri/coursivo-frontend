@@ -54,12 +54,12 @@ export function ServerAwakener({ children }: ServerAwakenerProps) {
   // We could add a small delay before showing it, but the user asked for this specific feedback.
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background/95 backdrop-blur-sm p-4 text-center animate-in fade-in duration-300">
+    <div className="animate-in fade-in fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background/95 p-4 text-center backdrop-blur-sm duration-300">
       <div className="max-w-md space-y-8">
         <div className="relative mx-auto h-24 w-24">
           <div className="absolute inset-0 animate-ping rounded-full bg-primary/20"></div>
-          <div className="relative flex h-full w-full items-center justify-center rounded-full bg-primary/10 border-2 border-primary">
-            <Server className="h-10 w-10 text-primary animate-pulse" />
+          <div className="relative flex h-full w-full items-center justify-center rounded-full border-2 border-primary bg-primary/10">
+            <Server className="h-10 w-10 animate-pulse text-primary" />
           </div>
         </div>
 
@@ -79,12 +79,12 @@ export function ServerAwakener({ children }: ServerAwakenerProps) {
 
         <div className="flex flex-col items-center gap-2">
           <Loader2 className="h-6 w-6 animate-spin text-primary" />
-          <span className="text-sm text-muted-foreground tabular-nums">
+          <span className="text-sm tabular-nums text-muted-foreground">
             Waiting: {elapsed}s
           </span>
         </div>
 
-        <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground/60 bg-muted/50 py-2 px-4 rounded-full">
+        <div className="flex items-center justify-center gap-2 rounded-full bg-muted/50 px-4 py-2 text-sm text-muted-foreground/60">
           <Coffee className="h-4 w-4" />
           <span>Grab a coffee while you wait!</span>
         </div>

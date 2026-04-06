@@ -11,12 +11,12 @@ export function SearchBar({
   className,
 }: SearchBarProps) {
   return (
-    <div className={cn("flex items-center relative", className)}>
+    <div className={cn("relative flex items-center", className)}>
       <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
       <input
         type="text"
         placeholder={placeholder}
-        className="h-9 w-full rounded-full border border-input bg-muted/50 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:bg-background transition-colors"
+        className="h-9 w-full rounded-full border border-input bg-muted/50 pl-9 pr-4 text-sm text-foreground transition-colors placeholder:text-muted-foreground focus:bg-background focus:outline-none focus:ring-2 focus:ring-ring"
       />
     </div>
   );

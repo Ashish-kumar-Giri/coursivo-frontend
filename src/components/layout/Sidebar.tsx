@@ -56,11 +56,11 @@ function SidebarNavItem({
         to={item.href}
         title={isCollapsed ? item.name : undefined}
         className={cn(
-          "flex items-center gap-2.5 px-2.5 py-1.5 text-[13px] rounded-md transition-colors whitespace-nowrap",
+          "flex items-center gap-2.5 whitespace-nowrap rounded-md px-2.5 py-1.5 text-[13px] transition-colors",
           isCollapsed && "justify-center px-2",
           isActive
-            ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
-            : "text-sidebar-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground font-normal",
+            ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
+            : "font-normal text-sidebar-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
         )}
       >
         <item.icon
@@ -107,7 +107,7 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
   return (
     <aside
       className={cn(
-        "flex h-screen flex-col bg-sidebar border-r border-sidebar-border transition-[width] duration-300 ease-in-out overflow-hidden",
+        "flex h-screen flex-col overflow-hidden border-r border-sidebar-border bg-sidebar transition-[width] duration-300 ease-in-out",
         isCollapsed ? "w-16" : "w-[240px]",
       )}
       style={{ willChange: "width" }}
@@ -115,14 +115,14 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
       {/* Logo / Brand */}
       <div
         className={cn(
-          "flex h-14 items-center border-b border-sidebar-border shrink-0",
-          isCollapsed ? "justify-center" : "justify-between px-4 gap-2",
+          "flex h-14 shrink-0 items-center border-b border-sidebar-border",
+          isCollapsed ? "justify-center" : "justify-between gap-2 px-4",
         )}
       >
         {!isCollapsed && (
           <Link
             to="/"
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity overflow-hidden shrink-0"
+            className="flex shrink-0 items-center gap-2 overflow-hidden transition-opacity hover:opacity-80"
           >
             <Logo size="sm" className="text-sidebar-accent-foreground" />
           </Link>
@@ -131,8 +131,8 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
           onClick={onToggle}
           title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           className={cn(
-            "flex items-center justify-center rounded-sm text-sidebar-foreground/50 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors shrink-0",
-            isCollapsed ? "p-2 w-full h-full" : "p-1.5",
+            "flex shrink-0 items-center justify-center rounded-sm text-sidebar-foreground/50 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+            isCollapsed ? "h-full w-full p-2" : "p-1.5",
           )}
         >
           {isCollapsed ? (
@@ -144,7 +144,7 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
       </div>
 
       {/* Main Navigation - scrollable area */}
-      <nav className="flex-1 min-h-0 overflow-y-auto px-2 py-2">
+      <nav className="min-h-0 flex-1 overflow-y-auto px-2 py-2">
         {/* Main Items */}
         <ul className="space-y-0.5">
           {config.mainNavItems.items.map((item) => (
@@ -161,7 +161,7 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
         {config.contentSection && (
           <div className="mt-5">
             {!isCollapsed && config.contentSection.title && (
-              <h3 className="px-2.5 mb-1 text-[11px] font-medium text-sidebar-foreground/50 uppercase tracking-widest">
+              <h3 className="mb-1 px-2.5 text-[11px] font-medium uppercase tracking-widest text-sidebar-foreground/50">
                 {config.contentSection.title}
               </h3>
             )}
@@ -183,7 +183,7 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
       <div className="shrink-0 border-t border-sidebar-border">
         {/* Bottom Navigation Items */}
         {config.bottomNavItems.length > 0 && (
-          <ul className="px-2 pt-2 pb-1 space-y-0.5 border-b border-sidebar-border">
+          <ul className="space-y-0.5 border-b border-sidebar-border px-2 pb-1 pt-2">
             {config.bottomNavItems.map((item) => (
               <SidebarNavItem
                 key={item.name}
@@ -201,14 +201,14 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
             <DropdownMenuTrigger asChild>
               <button
                 className={cn(
-                  "flex items-center gap-2.5 w-full px-2 py-1.5 rounded-md transition-colors",
-                  "hover:bg-sidebar-accent text-sidebar-foreground",
+                  "flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 transition-colors",
+                  "text-sidebar-foreground hover:bg-sidebar-accent",
                   isCollapsed && "justify-center",
                 )}
               >
                 {/* Avatar - matches Vercel's colorful circle */}
-                <div className="h-6 w-6 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 flex items-center justify-center shrink-0">
-                  <span className="text-[10px] font-semibold text-white leading-none">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-400 to-violet-500">
+                  <span className="text-[10px] font-semibold leading-none text-white">
                     {user?.fullName
                       ? getInitials(user.fullName as string)
                       : "U"}
@@ -216,15 +216,15 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
                 </div>
                 {!isCollapsed && (
                   <>
-                    <div className="flex-1 text-left overflow-hidden">
-                      <p className="text-[13px] font-medium text-sidebar-accent-foreground truncate leading-none mb-0.5">
+                    <div className="flex-1 overflow-hidden text-left">
+                      <p className="mb-0.5 truncate text-[13px] font-medium leading-none text-sidebar-accent-foreground">
                         {user?.fullName || "User"}
                       </p>
-                      <p className="text-[11px] text-sidebar-foreground/50 truncate leading-none">
+                      <p className="truncate text-[11px] leading-none text-sidebar-foreground/50">
                         {user?.email || ""}
                       </p>
                     </div>
-                    <MoreVertical className="h-3.5 w-3.5 text-sidebar-foreground/40 shrink-0" />
+                    <MoreVertical className="h-3.5 w-3.5 shrink-0 text-sidebar-foreground/40" />
                   </>
                 )}
               </button>
@@ -248,8 +248,8 @@ export function Sidebar({ config, isCollapsed, onToggle }: SidebarProps) {
                   }
                 }}
               >
-                <Moon className="mr-2 h-4 w-4 hidden dark:block" />
-                <Sun className="mr-2 h-4 w-4 block dark:hidden" />
+                <Moon className="mr-2 hidden h-4 w-4 dark:block" />
+                <Sun className="mr-2 block h-4 w-4 dark:hidden" />
                 Toggle Theme
               </DropdownMenuItem>
               <DropdownMenuSeparator />

@@ -341,7 +341,7 @@ export default function CourseBuilder() {
   return (
     <div className="min-h-full bg-muted/30">
       {/* Header */}
-      <div className="bg-background border-b border-border sticky top-0 z-10">
+      <div className="sticky top-0 z-10 border-b border-border bg-background">
         <div className="container-padding mx-auto max-w-7xl py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -373,7 +373,7 @@ export default function CourseBuilder() {
       <div className="container-padding mx-auto max-w-7xl py-6">
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Main Content - Curriculum Builder */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="space-y-4 lg:col-span-2">
             <Card>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
@@ -390,8 +390,8 @@ export default function CourseBuilder() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {sections.length === 0 ? (
-                  <div className="text-center py-12 text-muted-foreground">
-                    <Video className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                  <div className="py-12 text-center text-muted-foreground">
+                    <Video className="mx-auto mb-4 h-12 w-12 opacity-50" />
                     <p className="font-medium">No sections yet</p>
                     <p className="text-sm">
                       Add your first section to start building your course
@@ -434,7 +434,7 @@ export default function CourseBuilder() {
                     {/* Drag Overlay for lessons */}
                     <DragOverlay>
                       {activeLesson && (
-                        <div className="flex items-center gap-3 p-3 rounded-sm bg-card border border-border shadow-lg">
+                        <div className="flex items-center gap-3 rounded-sm border border-border bg-card p-3 shadow-lg">
                           <GripVertical className="h-4 w-4 text-muted-foreground" />
                           <div className="text-muted-foreground">
                             {activeLesson.type === "video" ? (
@@ -446,7 +446,7 @@ export default function CourseBuilder() {
                           <span className="flex-1 text-sm">
                             {activeLesson.title}
                           </span>
-                          <span className="text-xs text-muted-foreground flex items-center gap-1">
+                          <span className="flex items-center gap-1 text-xs text-muted-foreground">
                             <Clock className="h-3 w-3" />
                             {activeLesson.duration}
                           </span>
