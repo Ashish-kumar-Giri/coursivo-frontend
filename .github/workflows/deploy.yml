@@ -1,0 +1,32 @@
+name: Deploy Frontend to EC2
+
+on:
+  push:
+    branches:
+      - main  # Triggers the pipeline when someone pushes to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Deploying via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            echo "1. Pulling latest code..."
+            cd ~/sam-frontend
+            git pull origin main
+            
+            echo "2. Building React App..."
+            npm install
+            npm run build
+            
+            echo "3. Refreshing Nginx Files..."
+            sudo rm -rf /var/www/html/*
+            sudo cp -r dist/* /var/www/html/
+            
+            echo "Deployment Successful! 🚀"
